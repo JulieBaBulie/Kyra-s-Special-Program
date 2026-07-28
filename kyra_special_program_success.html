@@ -1,0 +1,1454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KYRA'S SPECIAL PROGRAM FOR FUCKING CRUSHING IT</title>
+  <style>
+    :root {
+      --pink-light: #f0d4e6;
+      --pink-mid: #e87ba4;
+      --pink-dark: #c44a7a;
+      --gold: #ffd700;
+      --gold-dark: #d4af37;
+    }
+
+    * { box-sizing: border-box; }
+    body { 
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; 
+      margin: 0; 
+      background: linear-gradient(135deg, rgba(240, 212, 230, 0.3) 0%, rgba(255, 215, 0, 0.1) 100%);
+      min-height: 100vh;
+    }
+
+    .container { 
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 1.5rem 1rem; 
+    }
+
+    .star-banner { 
+      background: linear-gradient(90deg, var(--pink-mid) 0%, var(--gold) 100%); 
+      color: white; 
+      padding: 1.5rem; 
+      border-radius: 12px; 
+      text-align: center; 
+      margin-bottom: 1.5rem; 
+      box-shadow: 0 4px 12px rgba(232, 123, 164, 0.3); 
+    }
+
+    .star-score { 
+      font-size: 48px; 
+      font-weight: 700; 
+      margin: 0.5rem 0; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      gap: 12px; 
+    }
+
+    .star-icon { font-size: 56px; }
+
+    .star-banner h1 { 
+      margin: 0; 
+      font-size: 24px; 
+      font-weight: 600; 
+    }
+
+    .section { 
+      background: white; 
+      border: 2px solid var(--pink-light); 
+      border-radius: 12px; 
+      padding: 1.5rem; 
+      margin-bottom: 1.5rem; 
+    }
+
+    .section h2 { 
+      margin: 0 0 1rem; 
+      font-size: 18px; 
+      font-weight: 600; 
+      color: var(--pink-dark); 
+      display: flex; 
+      align-items: center; 
+      gap: 8px; 
+    }
+
+    .section-icon { font-size: 20px; }
+
+    .task-form { 
+      display: grid; 
+      gap: 8px; 
+      margin-bottom: 1rem; 
+    }
+
+    .task-form input { 
+      padding: 10px 12px; 
+      border: 1px solid var(--pink-light); 
+      border-radius: 8px; 
+      font-size: 14px; 
+    }
+
+    .task-form button { 
+      padding: 10px 16px; 
+      background: var(--pink-mid); 
+      color: white; 
+      border: none; 
+      border-radius: 8px; 
+      font-weight: 500; 
+      cursor: pointer; 
+    }
+
+    .task-form button:hover { background: var(--pink-dark); }
+
+    .task-item { 
+      display: flex; 
+      align-items: center; 
+      gap: 12px; 
+      padding: 12px; 
+      background: var(--pink-light); 
+      border-radius: 8px; 
+      margin-bottom: 8px; 
+    }
+
+    .task-item input[type="checkbox"] { 
+      width: 20px; 
+      height: 20px; 
+      cursor: pointer; 
+    }
+
+    .task-item.completed { opacity: 0.6; }
+
+    .task-item.completed span { 
+      text-decoration: line-through; 
+      color: #999; 
+    }
+
+    .task-item span { 
+      flex: 1; 
+      font-size: 14px;
+      word-break: break-word;
+    }
+
+    .task-item .earned { 
+      color: var(--gold-dark); 
+      font-weight: 600; 
+      font-size: 12px; 
+      background: var(--pink-light);
+      padding: 4px 8px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .task-delete { 
+      background: white; 
+      border: 1px solid #ccc; 
+      color: #666; 
+      padding: 6px 10px; 
+      border-radius: 4px; 
+      cursor: pointer; 
+      font-size: 12px; 
+    }
+
+    .task-delete:hover { background: #f5f5f5; }
+
+    .spending-form { 
+      display: grid; 
+      gap: 8px; 
+      margin-bottom: 1rem; 
+    }
+
+    .spending-form input, .spending-form select { 
+      padding: 10px 12px; 
+      border: 1px solid var(--pink-light); 
+      border-radius: 8px; 
+      font-size: 14px; 
+    }
+
+    .spending-form button { 
+      padding: 10px 16px; 
+      background: var(--gold-dark); 
+      color: #333; 
+      border: none; 
+      border-radius: 8px; 
+      font-weight: 500; 
+      cursor: pointer; 
+    }
+
+    .spending-form button:hover { background: var(--gold); }
+
+    .spending-item { 
+      display: flex; 
+      justify-content: space-between; 
+      padding: 10px; 
+      border-bottom: 1px solid var(--pink-light); 
+      font-size: 13px; 
+    }
+
+    .spending-item:last-child { border-bottom: none; }
+
+    .spending-category { 
+      color: var(--pink-dark); 
+      font-weight: 500; 
+    }
+
+    .spending-amount { 
+      font-weight: 600; 
+    }
+
+    .allocation-grid { 
+      display: grid; 
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); 
+      gap: 12px; 
+    }
+
+    .allocation-card { 
+      background: linear-gradient(135deg, var(--pink-light) 0%, rgba(255, 215, 0, 0.2) 100%); 
+      padding: 12px; 
+      border-radius: 8px; 
+      border: 1px solid var(--pink-mid); 
+    }
+
+    .allocation-label { 
+      font-size: 12px; 
+      color: var(--pink-dark); 
+      font-weight: 600; 
+      margin-bottom: 4px; 
+    }
+
+    .allocation-amount { 
+      font-size: 16px; 
+      font-weight: 700; 
+      color: var(--pink-dark); 
+    }
+
+    .empty-state { 
+      text-align: center; 
+      padding: 20px; 
+      color: #999; 
+      font-size: 14px; 
+    }
+
+    .gold-text { 
+      color: var(--gold-dark); 
+      font-weight: 600; 
+    }
+
+    .goal-card { 
+      background: white;
+      border: 1px solid var(--pink-light);
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 12px;
+    }
+
+    .goal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .goal-name {
+      font-weight: 600;
+      color: var(--pink-dark);
+      font-size: 14px;
+    }
+
+    .goal-status {
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .goal-status.under {
+      color: #27ae60;
+    }
+
+    .goal-status.over {
+      color: #e74c3c;
+    }
+
+    .goal-progress {
+      width: 100%;
+      height: 12px;
+      background: #f0f0f0;
+      border-radius: 6px;
+      overflow: hidden;
+      margin-bottom: 8px;
+    }
+
+    .goal-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--gold-dark) 0%, var(--gold) 100%);
+      border-radius: 6px;
+      transition: width 0.3s ease;
+    }
+
+    .goal-bar.warning {
+      background: linear-gradient(90deg, #f39c12 0%, #e67e22 100%);
+    }
+
+    .goal-bar.danger {
+      background: linear-gradient(90deg, #e74c3c 0%, #c0392b 100%);
+    }
+
+    .goal-amounts {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: #666;
+    }
+
+    .gold-light {
+      background: rgba(255, 215, 0, 0.15);
+    }
+
+    .account-form {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
+      margin-bottom: 1.5rem;
+    }
+
+    .account-input {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .account-input label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--pink-dark);
+    }
+
+    .account-input input {
+      padding: 10px 12px;
+      border: 1px solid var(--pink-light);
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    .account-save-btn {
+      grid-column: 1 / -1;
+      padding: 12px 16px;
+      background: linear-gradient(90deg, var(--pink-mid) 0%, var(--gold-dark) 100%);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .account-save-btn:hover {
+      background: linear-gradient(90deg, var(--pink-dark) 0%, var(--gold) 100%);
+    }
+  </style>
+</head>
+<body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+
+<div class="container">
+  <div class="star-banner">
+    <h1>KYRA'S SPECIAL PROGRAM FOR FUCKING CRUSHING IT</h1>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.9); margin-bottom: 1rem;">Tasks completed</div>
+    <div class="star-score">
+      <span class="star-icon">⭐</span>
+      <span id="totalStars">0</span>
+    </div>
+    <div id="starCelebration" style="font-size: 14px; color: #fff; margin-top: 0.75rem; font-weight: 600; min-height: 20px;"></div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.85); margin-top: 0.5rem;">Keep checking off tasks to earn more stars!</div>
+    <div id="achievementDisplay" style="margin-top: 1rem; font-size: 20px; text-align: center;"></div>
+  </div>
+
+  <div class="section">
+  <div class="section">
+    <h2><span class="section-icon">💰</span> Track Spending (Log Every Purchase!)</h2>
+    <div style="background: var(--gold-light); padding: 12px; border-radius: 8px; margin-bottom: 1rem; font-size: 13px;">
+      <strong style="color: #c97817;">Earn ⭐ stars for every purchase logged!</strong> Each transaction you log = 1 star. More logging = more stars + better spending insights. Hit "Log spending" and watch your stars grow!
+    </div>
+    <form class="spending-form" id="spendingForm">
+      <input type="date" id="spendDate" required>
+      <input type="text" id="spendDesc" placeholder="What did you buy?" required>
+      <select id="spendCategory" required>
+        <option value="">Select category</option>
+        <option value="essentials">Essentials (rent, utilities, groceries, gas, pet care)</option>
+        <option value="discretionary">Discretionary (eating out, entertainment, shopping)</option>
+        <option value="payments">Minimum Payments (credit card minimums)</option>
+        <option value="discover">Discover Card Paydown (25.49% interest)</option>
+        <option value="aa">American Airlines Paydown (27.49% interest)</option>
+        <option value="capone">Capital One Paydown (27.74% interest)</option>
+      </select>
+      <input type="number" id="spendAmount" placeholder="Amount" step="0.01" required>
+      <button type="submit">Log spending</button>
+    </form>
+    <div id="spendingList"></div>
+  </div>
+
+  <div class="section">
+    <h2><span class="section-icon">💵</span> Track Income (Log Extra Money!)</h2>
+    <div style="background: rgba(76, 175, 80, 0.1); padding: 12px; border-radius: 8px; margin-bottom: 1rem; font-size: 13px;">
+      <strong style="color: #2e7d32;">Earn ⭐ stars for every dollar earned!</strong> Tutoring, selling stuff, Copeca, babysitting Walter—log it all! Each entry = 1 star. Watch your income grow!
+    </div>
+    <form class="spending-form" id="incomeForm">
+      <input type="date" id="incomeDate" required>
+      <input type="text" id="incomeDesc" placeholder="How did you earn this?" required>
+      <select id="incomeCategory" required>
+        <option value="">Select source</option>
+        <option value="tutoring">Tutoring</option>
+        <option value="sell">Sell Your Stuff (Poshmark, Depop, etc.)</option>
+        <option value="copeca">Make & Sell at Copeca</option>
+        <option value="grading">Grading for Other Depts</option>
+        <option value="babysit">Babysit Walter</option>
+        <option value="other">Other</option>
+      </select>
+      <input type="number" id="incomeAmount" placeholder="Amount" step="0.01" required>
+      <button type="submit">Log income</button>
+    </form>
+    <div id="incomeList"></div>
+  </div>
+
+  <div class="section">
+    <h2><span class="section-icon">✓</span> Tasks & Goals</h2>
+    <div style="background: var(--pink-light); padding: 12px; border-radius: 8px; margin-bottom: 1rem; font-size: 13px;">
+      <strong style="color: var(--pink-dark);">How to earn stars:</strong> Check off each task as you complete it. Every completed task = <span class="star-icon" style="font-size: 16px;">⭐</span> 1 gold star. Your total stars are shown at the top!
+    </div>
+    <form class="task-form" id="taskForm">
+      <input type="text" id="taskInput" placeholder="Add a new task..." required>
+      <button type="submit">Add task</button>
+    </form>
+    <div id="taskList"></div>
+  </div>
+
+  <div class="section">
+    <h2><span class="section-icon">💵</span> Money Owed to You (Collect It!)</h2>
+    <div style="background: var(--pink-light); padding: 12px; border-radius: 8px; margin-bottom: 1rem; font-size: 13px;">
+      <strong style="color: var(--pink-dark);">Track money your roommates owe you.</strong> When they pay back their share, mark it as paid. Send reminders to earn ⭐ stars!
+    </div>
+    <div id="receivablesDisplay"></div>
+    
+    <div style="background: rgba(232, 123, 164, 0.1); padding: 12px; border-radius: 8px; margin-top: 1rem; border-left: 4px solid var(--pink-dark);">
+      <div style="font-size: 13px; font-weight: 600; color: var(--pink-dark); margin-bottom: 12px;">Send Reminders (earn ⭐ for each one!)</div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+        <button onclick="logReminder('Jack')" style="background: var(--pink-mid); color: white; border: none; padding: 12px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 13px;">📬 Reminder sent to Jack</button>
+        <button onclick="logReminder('Freida')" style="background: var(--pink-mid); color: white; border: none; padding: 12px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 13px;">📬 Reminder sent to Freida</button>
+      </div>
+    </div>
+    
+    <div style="background: rgba(212, 175, 55, 0.2); padding: 12px; border-radius: 8px; margin-top: 1rem; border-left: 4px solid #d4af37;">
+      <div style="font-size: 13px; color: #c97817;"><strong>💡 Worth collecting:</strong> If Jack and Freida pay you $600, don't float the utility bill yourself. Use Splitwise to bill them directly, then put their $600 toward Discover. That $600 is costing you <strong>$152.94/year</strong> in Discover interest (25.49% APR). Every dollar they pay = you save interest! Consider charging them interest or late payment fees if they don't pay on time.</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2><span class="section-icon">🏦</span> Complete Financial Picture (Update Anytime!)</h2>
+    <div style="background: rgba(76, 175, 80, 0.1); padding: 12px; border-radius: 8px; margin-bottom: 1rem; font-size: 13px;">
+      <strong style="color: #2e7d32;">Earn ⭐ stars for each update!</strong> Track your progress as often as you want—whenever you pay a bill, move money, or want to check in. Each update = 1 star!
+    </div>
+    <div class="account-form">
+      <div class="account-input">
+        <label>Checking Account</label>
+        <input type="number" id="checkingInput" placeholder="$0" step="0.01">
+      </div>
+      <div class="account-input">
+        <label>HYSA (Capital One)</label>
+        <input type="number" id="hysaInput" placeholder="$0" step="0.01">
+      </div>
+      <div class="account-input">
+        <label>Discover Card (debt)</label>
+        <input type="number" id="discoverInput" placeholder="$0" step="0.01">
+      </div>
+      <div class="account-input">
+        <label>American Airlines Card (debt)</label>
+        <input type="number" id="aaInput" placeholder="$0" step="0.01">
+      </div>
+      <div class="account-input">
+        <label>Capital One Card (debt)</label>
+        <input type="number" id="caponeInput" placeholder="$0" step="0.01">
+      </div>
+      <div class="account-input">
+        <label>Medical Debt (Ankle)</label>
+        <input type="number" id="medicalInput" placeholder="$0" step="0.01">
+      </div>
+      <div class="account-input">
+        <label>Student Loans (will be forgiven)</label>
+        <input type="number" id="studentInput" placeholder="$0" step="0.01">
+      </div>
+      <button onclick="updateAccountBalances()" class="account-save-btn">Save all balances</button>
+    </div>
+    
+    <div style="margin-top: 1.5rem; position: relative; height: 350px;">
+      <canvas id="balanceChart" role="img" aria-label="Complete financial picture showing all accounts and debts over time"></canvas>
+    </div>
+    
+    <div style="margin-top: 1.5rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px;">
+      <div class="allocation-card">
+        <div class="allocation-label">Checking</div>
+        <div class="allocation-amount" id="checkingDisplay">$0</div>
+      </div>
+      <div class="allocation-card">
+        <div class="allocation-label">HYSA</div>
+        <div class="allocation-amount" id="hysaDisplay">$0</div>
+      </div>
+      <div class="allocation-card" style="background: linear-gradient(135deg, #ffcccc 0%, rgba(255, 100, 100, 0.1) 100%); border-color: #ff6b6b;">
+        <div class="allocation-label" style="color: #c92a2a;">Total Debt</div>
+        <div class="allocation-amount" style="color: #c92a2a;" id="totalDebtDisplay">$0</div>
+      </div>
+      <div class="allocation-card">
+        <div class="allocation-label">Liquid Assets</div>
+        <div class="allocation-amount" id="liquidDisplay">$0</div>
+      </div>
+      <div class="allocation-card">
+        <div class="allocation-label">Net Worth</div>
+        <div class="allocation-amount" id="netWorthDisplay">$0</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2><span class="section-icon">📅</span> August & February: When Your $10k Student Loan Hits (EARN STARS!)</h2>
+    
+    <div style="background: var(--pink-light); padding: 12px; border-radius: 8px; margin-bottom: 1.5rem; font-size: 13px;">
+      <strong style="color: var(--pink-dark);">How it works:</strong> Twice a year, your student loan deposit arrives. The $6k aunt gift (August only) combines with the loan. Here's the exact plan:
+    </div>
+
+    <div style="background: rgba(232, 123, 164, 0.08); padding: 1rem; border-radius: 8px; border-left: 4px solid var(--pink-dark); margin-bottom: 1.5rem;">
+      <div style="font-weight: 600; margin-bottom: 12px; color: var(--pink-dark);">📋 Action Steps (do these in order):</div>
+      <ol style="margin: 0; padding-left: 20px; line-height: 2;">
+        <li><strong>Deposit to HYSA:</strong> $10k student loan + $6k aunt gift (August only) = combine in Capital One 360 HYSA</li>
+        <li><strong>Pay off Capital One completely:</strong> $328.33 (HIGHEST interest rate @ 27.74%) — STOP USING THIS CARD</li>
+        <li><strong>Pay off American Airlines completely:</strong> $2,561 (2ND highest @ 27.49%) — STOP USING THIS CARD</li>
+        <li><strong>Set up auto-transfer:</strong> $1,039/month from HYSA → Checking for living expenses (for 6 months)</li>
+        <li><strong>AUGUST: Pay Discover:</strong> $6,876.67 (all remaining after cards + living expenses reserve)</li>
+        <li><strong>HYSA after August payments:</strong> Keep exactly $6,234 (covers $1,039 × 6 months auto-transfers)</li>
+        <li><strong>FEBRUARY: When $10k arrives, repeat:</strong> Pay Discover $3,766, keep $6,234 in HYSA</li>
+      </ol>
+    </div>
+
+    <div style="margin-bottom: 1.5rem;">
+      <div style="font-weight: 600; margin-bottom: 12px;">The Math:</div>
+      <div class="allocation-grid">
+        <div class="allocation-card">
+          <div class="allocation-label">💰 Student Loan</div>
+          <div class="allocation-amount">$10,000</div>
+        </div>
+        <div class="allocation-card" style="opacity: 0.8;">
+          <div class="allocation-label">🎁 Aunt's Gift (Aug)</div>
+          <div class="allocation-amount">$6,000</div>
+        </div>
+        <div class="allocation-card">
+          <div class="allocation-label">= Into HYSA</div>
+          <div class="allocation-amount">$16,000*</div>
+          <div style="font-size: 11px; color: #666; margin-top: 4px;">*$10k in Feb</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-bottom: 1.5rem; background: rgba(255, 215, 0, 0.1); padding: 1rem; border-radius: 8px;">
+      <div style="font-weight: 600; margin-bottom: 12px;">AUGUST (with $6k aunt gift = $16,000 total):</div>
+      <div class="allocation-grid">
+        <div class="allocation-card" style="background: linear-gradient(135deg, #90EE90 0%, rgba(76, 175, 80, 0.1) 100%); border-color: #4CAF50;">
+          <div class="allocation-label" style="color: #2e7d32;">✓ Pay Capital One</div>
+          <div class="allocation-amount" style="color: #2e7d32;">-$328.33</div>
+        </div>
+        <div class="allocation-card" style="background: linear-gradient(135deg, #90EE90 0%, rgba(76, 175, 80, 0.1) 100%); border-color: #4CAF50;">
+          <div class="allocation-label" style="color: #2e7d32;">✓ Pay American Airlines</div>
+          <div class="allocation-amount" style="color: #2e7d32;">-$2,561</div>
+        </div>
+        <div class="allocation-card">
+          <div class="allocation-label">↩️ Reserve for auto-transfers</div>
+          <div class="allocation-amount">$6,234</div>
+          <div style="font-size: 11px; color: #666; margin-top: 4px;">$1,039 × 6 mo</div>
+        </div>
+        <div class="allocation-card" style="background: linear-gradient(135deg, #ffcccc 0%, rgba(255, 100, 100, 0.1) 100%); border-color: #ff6b6b;">
+          <div class="allocation-label" style="color: #c92a2a;">→ Pay Discover</div>
+          <div class="allocation-amount" style="color: #c92a2a;">$6,876.67</div>
+          <div style="font-size: 11px; color: #c92a2a; margin-top: 4px;">Remaining</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-bottom: 1.5rem; background: rgba(255, 215, 0, 0.1); padding: 1rem; border-radius: 8px;">
+      <div style="font-weight: 600; margin-bottom: 12px;">FEBRUARY (no aunt gift = $10,000 only):</div>
+      <div class="allocation-grid">
+        <div class="allocation-card">
+          <div class="allocation-label">↩️ Reserve for auto-transfers</div>
+          <div class="allocation-amount">$6,234</div>
+          <div style="font-size: 11px; color: #666; margin-top: 4px;">$1,039 × 6 mo</div>
+        </div>
+        <div class="allocation-card" style="background: linear-gradient(135deg, #ffcccc 0%, rgba(255, 100, 100, 0.1) 100%); border-color: #ff6b6b;">
+          <div class="allocation-label" style="color: #c92a2a;">→ Pay Discover</div>
+          <div class="allocation-amount" style="color: #c92a2a;">$3,766</div>
+          <div style="font-size: 11px; color: #c92a2a; margin-top: 4px;">Remaining</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="background: rgba(212, 175, 55, 0.15); padding: 12px; border-radius: 8px; border: 1px solid #d4af37;">
+      <div style="font-size: 13px;"><strong>🎯 The key:</strong> In August, you have $16k. Kill Capital One ($328) + American Airlines ($2,561), then reserve $6,234 for 6 months of living expenses. Attack Discover with the remaining $6,876.67. In February, the $10k arrives again—reserve $6,234, pay Discover $3,766. Every 6 months, repeat. ⭐ Log each payment!</div>
+    </div>
+  </div>
+
+
+  <div class="section">
+    <h2><span class="section-icon">📊</span> Debt Payoff Tracker (Watch Them Shrink!)</h2>
+    <div style="background: var(--pink-light); padding: 12px; border-radius: 8px; margin-bottom: 1.5rem; font-size: 13px;">
+      <strong style="color: var(--pink-dark);">Update your account balances above to see progress.</strong> Each card shows how much you've paid down. Celebrate every dollar!
+    </div>
+    <div id="debtTracker"></div>
+  </div>
+
+  <div class="section">
+    <h2><span class="section-icon">⏱️</span> Time to Discover Zero</h2>
+    <div style="background: rgba(255, 107, 107, 0.1); padding: 1rem; border-radius: 8px; border: 1px solid #ff6b6b;">
+      <div id="discoverTimeline"></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2><span class="section-icon">💡</span> Quick Income Boost Ideas</h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px;">
+      <div class="allocation-card">
+        <div class="allocation-label">🛍️ Sell Your Stuff</div>
+        <div class="allocation-amount">Variable</div>
+        <div style="font-size: 11px; color: #666; margin-top: 4px;">Poshmark, Depop, Mercari, Marketplace</div>
+      </div>
+      <div class="allocation-card">
+        <div class="allocation-label">🎨 Make & Sell at Copeca</div>
+        <div class="allocation-amount">$50-100/week</div>
+        <div style="font-size: 11px; color: #666; margin-top: 4px;">Grading for other depts ($18-25/hr)</div>
+      </div>
+      <div class="allocation-card">
+        <div class="allocation-label">📚 Tutoring</div>
+        <div class="allocation-amount">$20-40/hr</div>
+        <div style="font-size: 11px; color: #666; margin-top: 4px;">Political science, writing</div>
+      </div>
+      <div class="allocation-card">
+        <div class="allocation-label">🐕 Babysit Walter</div>
+        <div class="allocation-amount">Variable</div>
+        <div style="font-size: 11px; color: #666; margin-top: 4px;">When you have time</div>
+      </div>
+    </div>
+    <div style="background: var(--gold-light); padding: 12px; border-radius: 8px; margin-top: 1rem; font-size: 13px;">
+      <strong>Target:</strong> $300-400/month extra would stabilize your plan and let you attack debt faster.
+    </div>
+  </div>
+
+  <div class="section">
+    <h2><span class="section-icon">🎯</span> Spending Goals & Debt Payoff</h2>
+    <div id="goalsDisplay"></div>
+  </div>
+
+  <div class="section">
+    <h2><span class="section-icon">❓</span> Questions for Julie</h2>
+    <div style="background: var(--pink-light); padding: 12px; border-radius: 8px; margin-bottom: 1rem; font-size: 13px;">
+      <strong style="color: var(--pink-dark);">Kyra:</strong> Ask questions as they come up. <strong style="color: #4CAF50;">Julie:</strong> Answer them here and they'll appear below.
+    </div>
+    
+    <div style="margin-bottom: 1.5rem;">
+      <div style="font-weight: 600; margin-bottom: 8px; font-size: 14px;">💬 Ask a Question</div>
+      <form id="questionForm" style="display: flex; gap: 8px;">
+        <input type="text" id="questionInput" placeholder="Type your question for Julie..." style="flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 13px;" required>
+        <button type="submit" style="background: var(--pink-mid); color: white; border: none; padding: 10px 16px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 13px;">Send</button>
+      </form>
+    </div>
+    
+    <div id="questionsDisplay"></div>
+  </div>
+
+<script>
+let tasks = JSON.parse(localStorage.getItem('kyra_tasks')) || [
+  { text: 'Open Capital One 360 HYSA account (4% APY high-yield savings): https://www.capitalone.com/bank/savings-accounts/360-savings/ — URGENT: need before $10k arrives in August', completed: false },
+  { text: 'Call clinic/medical provider about $3,554 medical debt — confirm it\'s truly 0% interest. Ask if there\'s ANY way to decrease the amount (hardship program, payment plan adjustment, financial assistance, forgiveness)', completed: false },
+  { text: 'Track ALL spending for 30 days to see real numbers — understand your actual budget', completed: false },
+  { text: 'Add other monthly expenses to budget (edit for accuracy: subscriptions, phone, etc.)', completed: false },
+  { text: 'Call Discover (25.49%) to ask for lower rate — save money immediately', completed: false },
+  { text: 'Call American Airlines (27.49%) to ask for lower rate — save money immediately', completed: false },
+  { text: 'Apply for CU Boulder Student Emergency Fund: https://www.colorado.edu/studentlife/student-emergency-fund (303-492-5091) — up to $2k', completed: false },
+  { text: 'Contact CU Office of Financial Aid (303-492-5091) or Dean of Students for emergency assistance — no application required', completed: false },
+  { text: 'Apply to SNAP (food stamps): Colorado PEAK: https://peak.colorado.gov or (303) 866-5500 — immediate relief', completed: false },
+  { text: 'Apply to Longmont CAReS+ (electricity, water, grocery rebates) — LongmontCares@LongmontColorado.gov — saves on utilities', completed: false },
+  { text: 'Set up utility bill collection system with Jack & Freida — use Splitwise or Venmo with automatic reminders. Collect BEFORE bill is due to avoid overdrafts', completed: false },
+  { text: 'When $10k loan hits: deposit to HYSA, then set up $1,039/month auto-transfer to checking — CRITICAL TIMING', completed: false },
+  { text: 'Confirm PSLF eligibility & state job requirements with financial aid (303-492-5091) — affects 10-year forgiveness plan', completed: false },
+  { text: 'Cut TV subscriptions to 1 service (~$27/month savings)', completed: false },
+  { text: 'Review pet insurance — find cheaper option or keep if it gives you peace of mind', completed: false },
+  { text: 'Cancel GradGuard Renter\'s Insurance or find cheaper option', completed: false },
+  { text: 'Once Capital One is paid off ($328): CUT UP/FREEZE the card, STOP USING IT', completed: false },
+  { text: 'Once American Airlines is paid off ($2,561): CUT UP/FREEZE the card, STOP USING IT', completed: false },
+  { text: 'Apply to Scholarship America Emergency Grants for Boulder County: https://info.scholarshipamerica.org/emergency-grants-for-boulder-county-college-students', completed: false },
+  { text: 'Apply for CDLE Colorado housing & utilities assistance: https://cdle.colorado.gov/housing-and-utilities-assistance', completed: false },
+  { text: 'Apply for graduate completion fellowship or emergency grant (ask CU grad office)', completed: false },
+  { text: 'Get full utility payoff from Jack ($350) — use Splitwise or Venmo to send reminders', completed: false },
+  { text: 'Get full utility payoff from Freida ($250) — use Splitwise or Venmo to send reminders', completed: false },
+  { text: 'Explore other sources of income (Wyzant tutoring, Chegg, freelance writing, etc.)', completed: false }
+];
+let spending = JSON.parse(localStorage.getItem('kyra_spending')) || [];
+let income = JSON.parse(localStorage.getItem('kyra_income')) || [];
+let updates = JSON.parse(localStorage.getItem('kyra_updates')) || [];
+let receivables = JSON.parse(localStorage.getItem('kyra_receivables')) || [
+  { person: 'Jack', amount: 350, paid: false },
+  { person: 'Freida', amount: 250, paid: false }
+];
+let reminders = JSON.parse(localStorage.getItem('kyra_reminders')) || [];
+let questions = JSON.parse(localStorage.getItem('kyra_questions')) || [];
+
+const spendingGoals = {
+  essentials: {
+    name: 'Essentials (rent, utilities, groceries, gas, pet care)',
+    target: 1838,
+    icon: '🏠'
+  },
+  discretionary: {
+    name: 'Discretionary (eating out, entertainment, shopping)',
+    target: 300,
+    icon: '🎉'
+  },
+  payments: {
+    name: 'Minimum Payments (credit card minimums)',
+    target: 939,
+    icon: '💳'
+  },
+  capone: {
+    name: '🎯 PRIORITY 1: Capital One ($328.33 @ 27.74% — HIGHEST RATE) — Pay off & STOP USING',
+    target: 328.33,
+    icon: '1️⃣',
+    priority: 1
+  },
+  aa: {
+    name: '🎯 PRIORITY 2: American Airlines ($2,561 @ 27.49%) — Pay off & STOP USING',
+    target: 2561,
+    icon: '2️⃣',
+    priority: 2
+  },
+  discover: {
+    name: '🎯 PRIORITY 3: Discover ($22,344 @ 25.49%) — Lowest rate, huge balance',
+    target: 22344,
+    icon: '3️⃣',
+    priority: 3
+  }
+};
+
+function saveTasks() { localStorage.setItem('kyra_tasks', JSON.stringify(tasks)); }
+function saveSpending() { localStorage.setItem('kyra_spending', JSON.stringify(spending)); }
+function saveIncome() { localStorage.setItem('kyra_income', JSON.stringify(income)); }
+
+function renderIncome() {
+  let html = '<div style="margin-top: 1rem;">';
+  let totalIncome = 0;
+  
+  if (income.length === 0) {
+    html += '<div style="font-size: 13px; color: #999; text-align: center; padding: 1rem;">No income logged yet. Start tracking your earnings! 💰</div>';
+  } else {
+    income.forEach((entry, idx) => {
+      const amount = parseFloat(entry.amount);
+      totalIncome += amount;
+      html += `
+        <div style="background: rgba(76, 175, 80, 0.08); padding: 12px; border-radius: 6px; margin-bottom: 8px; border-left: 4px solid #4CAF50;">
+          <div style="display: flex; justify-content: space-between; align-items: start;">
+            <div>
+              <div style="font-weight: 600; color: #2e7d32;">${entry.desc}</div>
+              <div style="font-size: 12px; color: #666;">${entry.category} • ${entry.date}</div>
+            </div>
+            <div style="text-align: right;">
+              <div style="font-weight: 600; color: #2e7d32; font-size: 16px;">+$${amount.toFixed(2)}</div>
+              <button onclick="deleteIncome(${idx})" style="background: #ff6b6b; color: white; border: none; padding: 4px 8px; border-radius: 4px; font-size: 11px; cursor: pointer;">Delete</button>
+            </div>
+          </div>
+        </div>
+      `;
+    });
+    
+    html += `
+      <div style="background: rgba(76, 175, 80, 0.15); padding: 12px; border-radius: 6px; margin-top: 1rem; text-align: center; border: 2px solid #4CAF50;">
+        <div style="font-weight: 600; color: #2e7d32;">Total Extra Income</div>
+        <div style="font-size: 20px; font-weight: 700; color: #2e7d32;">+$${totalIncome.toFixed(2)}</div>
+      </div>
+    `;
+  }
+  
+  html += '</div>';
+  document.getElementById('incomeList').innerHTML = html;
+}
+
+function deleteIncome(idx) {
+  income.splice(idx, 1);
+  saveIncome();
+  renderIncome();
+  updateStarCount();
+}
+
+function deleteSpending(idx) {
+  spending.splice(idx, 1);
+  saveSpending();
+  renderSpending();
+  renderGoals();
+  renderDiscoverTimeline();
+  updateStarCount();
+}
+
+function updateStarCount() {
+  const completedTasks = tasks.filter(t => t.completed).length;
+  const totals = calculateCategoryTotals();
+  
+  // 1 star per spending entry logged
+  const spendingStars = spending.length;
+  
+  // 1 star per income entry logged
+  const incomeStars = income.length;
+  
+  // 1 star per financial picture update
+  const updateStars = updates.length;
+  
+  // 1 star per reminder sent
+  const reminderStars = reminders.length;
+  
+  let budgetStars = 0;
+  Object.entries(spendingGoals).forEach(([key, goal]) => {
+    const spent = totals[key] || 0;
+    // For budget categories (essentials, discretionary, payments): earn star if under budget
+    if (['essentials', 'discretionary', 'payments'].includes(key)) {
+      if (spent > 0 && spent <= goal.target) {
+        budgetStars++;
+      }
+    }
+    // For card paydown categories: earn star if any payment is logged
+    else if (['aa', 'capone'].includes(key)) {
+      if (spent > 0) {
+        budgetStars++;
+      }
+    }
+    // NOTE: Discover transactions are already counted in spendingStars (1 star per entry), so don't double-count here
+  });
+  
+  const totalStars = completedTasks + budgetStars + spendingStars + incomeStars + updateStars + reminderStars;
+  document.getElementById('totalStars').textContent = totalStars;
+  
+  // Calculate achievements (25 stars = 1 turtle, 5 turtles = dragon, 2 dragons = castle, 2 castles = planet)
+  const turtles = Math.floor(totalStars / 25);
+  const dragons = Math.floor(turtles / 5);
+  const castles = Math.floor(dragons / 2);
+  const planets = Math.floor(castles / 2);
+  
+  let achievementEmoji = '';
+  if (planets > 0) achievementEmoji = '🪐 '.repeat(planets);
+  else if (castles > 0) achievementEmoji = '🏰 '.repeat(castles);
+  else if (dragons > 0) achievementEmoji = '🐉 '.repeat(dragons);
+  else if (turtles > 0) achievementEmoji = '🐢 '.repeat(turtles);
+  else achievementEmoji = '✨ (Level up at 25 stars!)';
+  
+  document.getElementById('achievementDisplay').textContent = achievementEmoji;
+  
+  // Show milestone celebrations
+  let celebration = '';
+  if (totalStars === 25) celebration = '🐢 Turtle! First milestone reached!';
+  else if (totalStars === 50) celebration = '🐢🐢 Two turtles! Building momentum!';
+  else if (totalStars === 100) celebration = '🐉 Dragon! Halfway to castle!';
+  else if (totalStars === 150) celebration = '🐉 + 🐢🐢🐢 Almost a second dragon!';
+  else if (totalStars === 200) celebration = '🏰 CASTLE! You\'re crushing it!';
+  else if (totalStars === 300) celebration = '🏰🏰 TWO CASTLES! Planet is within reach!';
+  else if (totalStars === 400) celebration = '🪐 PLANET! You\'re a superstar! 🌟';
+  else if (totalStars === 500) celebration = '🪐 + ⭐ 500 STARS! LEGENDARY!';
+  else if (totalStars > 0 && totalStars % 50 === 0) celebration = `✨ ${totalStars} Stars! Keep crushing it!`;
+  document.getElementById('starCelebration').textContent = celebration;
+}
+
+function calculateCategoryTotals() {
+  const totals = {
+    essentials: 0,
+    discretionary: 0,
+    payments: 0,
+    capone: 0,
+    aa: 0,
+    discover: 0
+  };
+  spending.forEach(item => {
+    if (totals.hasOwnProperty(item.category)) {
+      totals[item.category] += parseFloat(item.amount) || 0;
+    }
+  });
+  return totals;
+}
+
+function renderGoals() {
+  const totals = calculateCategoryTotals();
+  const goalsContainer = document.getElementById('goalsDisplay');
+  
+  let html = '';
+  Object.entries(spendingGoals).forEach(([key, goal]) => {
+    const spent = totals[key] || 0;
+    const target = goal.target;
+    const remaining = target - spent;
+    const percentage = Math.min((spent / target) * 100, 100);
+    const isOver = spent > target;
+    
+    // Different logic for budget vs card paydown categories
+    let status, statusClass, barClass, earnedStar;
+    
+    if (['essentials', 'discretionary', 'payments'].includes(key)) {
+      // Budget categories: show remaining and star if under budget
+      status = isOver ? `Over by $${(spent - target).toFixed(2)}` : `$${remaining.toFixed(2)} left`;
+      statusClass = isOver ? 'over' : 'under';
+      barClass = percentage > 100 ? 'danger' : percentage > 80 ? 'warning' : '';
+      earnedStar = spent > 0 && spent <= target ? '<span style="background: var(--gold); padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 600;">⭐ Star earned</span>' : '';
+    } else if (key === 'discover') {
+      // Discover: show progress toward full payoff and stars for each transaction
+      status = `$${spent.toFixed(2)} paid toward $${target.toFixed(2)}`;
+      statusClass = 'under';
+      barClass = '';
+      const discoverTransactions = spending.filter(s => s.category === 'discover').length;
+      earnedStar = discoverTransactions > 0 ? `<span style="background: var(--gold); padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 600;">⭐ ${discoverTransactions} star${discoverTransactions !== 1 ? 's' : ''}</span>` : '';
+    } else {
+      // Other card paydown categories (AA, Capital One): show progress and star if payment made
+      status = `$${spent.toFixed(2)} paid toward $${target.toFixed(2)}`;
+      statusClass = 'under';
+      barClass = '';
+      earnedStar = spent > 0 ? '<span style="background: var(--gold); padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 600;">⭐ Star earned</span>' : '';
+    }
+    
+    html += `
+      <div class="goal-card">
+        <div class="goal-header">
+          <span class="goal-name">${goal.icon} ${goal.name}</span>
+          <div style="display: flex; gap: 8px; align-items: center;">
+            <span class="goal-status ${statusClass}">${status}</span>
+            ${earnedStar}
+          </div>
+        </div>
+        <div class="goal-progress">
+          <div class="goal-bar ${barClass}" style="width: ${percentage}%"></div>
+        </div>
+        <div class="goal-amounts">
+          <span>Spent: $${spent.toFixed(2)}</span>
+          <span>Target: $${target.toFixed(2)}</span>
+        </div>
+      </div>
+    `;
+  });
+  
+  goalsContainer.innerHTML = html;
+}
+
+function renderReceivables() {
+  const container = document.getElementById('receivablesDisplay');
+  const totalOwed = receivables.reduce((sum, r) => sum + r.amount, 0);
+  
+  let html = `
+    <div style="margin-bottom: 1rem; display: grid; grid-template-columns: auto auto auto; gap: 12px; max-width: 500px;">
+  `;
+  
+  receivables.forEach((r, idx) => {
+    html += `
+      <div style="background: var(--pink-light); padding: 12px; border-radius: 8px; border: 1px solid var(--pink-mid);">
+        <div style="font-weight: 600; margin-bottom: 8px;">💰 ${r.person}</div>
+        <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 8px;">
+          <span style="font-size: 12px; color: #666;">$</span>
+          <input type="number" id="amount-${idx}" value="${r.amount.toFixed(2)}" step="0.01" style="width: 80px; padding: 6px; border: 1px solid #999; border-radius: 4px; font-size: 14px; font-weight: 600;">
+        </div>
+        <button onclick="updateReceivable(${idx})" style="background: #e87ba4; color: white; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; font-size: 12px; width: 100%; margin-bottom: 6px;">Update & Earn ⭐</button>
+      </div>
+    `;
+  });
+  
+  html += `
+    </div>
+    <div style="background: rgba(212, 175, 55, 0.15); padding: 12px; border-radius: 8px; border: 1px solid #d4af37; margin-top: 1rem;">
+      <div style="font-size: 13px; color: #666; margin-bottom: 4px;">Total owed by roommates:</div>
+      <div style="font-size: 24px; font-weight: 700; color: #d4af37;">$${totalOwed.toFixed(2)}</div>
+    </div>
+  `;
+  
+  container.innerHTML = html;
+}
+
+function markPaid(idx) {
+  receivables[idx].paid = !receivables[idx].paid;
+  if (receivables[idx].paid) {
+    receivables[idx].amount = 0;
+  }
+  localStorage.setItem('kyra_receivables', JSON.stringify(receivables));
+  renderReceivables();
+}
+
+function updateReceivable(idx) {
+  const newAmount = parseFloat(document.getElementById(`amount-${idx}`).value) || 0;
+  receivables[idx].amount = newAmount;
+  localStorage.setItem('kyra_receivables', JSON.stringify(receivables));
+  
+  // Track this update and award a star
+  const today = new Date().toISOString().split('T')[0];
+  updates.push({ date: today, type: 'receivable', person: receivables[idx].person, newAmount });
+  localStorage.setItem('kyra_updates', JSON.stringify(updates));
+  
+  renderReceivables();
+  updateStarCount();
+  alert(`✅ Updated ${receivables[idx].person}'s amount to $${newAmount.toFixed(2)}! You earned 1 ⭐ star.`);
+}
+
+function logReminder(person) {
+  const today = new Date().toISOString().split('T')[0];
+  reminders.push({ person, date: today });
+  localStorage.setItem('kyra_reminders', JSON.stringify(reminders));
+  updateStarCount();
+  alert(`✅ Reminder sent to ${person}! You earned 1 ⭐ star.`);
+}
+
+function renderDebtTracker() {
+  const balances = JSON.parse(localStorage.getItem('kyra_balances')) || { discover: 0, aa: 0, capone: 0, medical: 0 };
+  const initial = { discover: 22344, aa: 2561, capone: 328.33, medical: 3554 };
+  
+  let html = '';
+  const cards = [
+    { key: 'capone', name: '1️⃣ PRIORITY 1: Capital One Card ($328.33 @ 27.74% — HIGHEST RATE)', color: '#4CAF50', initial: 328.33 },
+    { key: 'aa', name: '2️⃣ PRIORITY 2: American Airlines Card ($2,561 @ 27.49%)', color: '#FFC107', initial: 2561 },
+    { key: 'discover', name: '3️⃣ PRIORITY 3: Discover Card ($22,344 @ 25.49%)', color: '#ff6b6b', initial: 22344 },
+    { key: 'medical', name: 'Medical Debt ($3,554 @ 0% — No interest, pay minimums)', color: '#99ccff', initial: 3554 }
+  ];
+  
+  cards.forEach(card => {
+    const remaining = balances[card.key] || card.initial;
+    const paidDown = card.initial - remaining;
+    const percent = (paidDown / card.initial) * 100;
+    
+    html += `
+      <div style="margin-bottom: 1.5rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+          <div style="font-weight: 600;">${card.name}</div>
+          <div style="font-size: 12px; color: #666;">Paid: $${paidDown.toFixed(2)} / Remaining: $${remaining.toFixed(2)}</div>
+        </div>
+        <div style="background: #eee; height: 12px; border-radius: 6px; overflow: hidden;">
+          <div style="background: ${card.color}; height: 100%; width: ${Math.min(percent, 100)}%; transition: width 0.3s;"></div>
+        </div>
+        <div style="font-size: 11px; color: #999; margin-top: 4px;">${percent.toFixed(0)}% paid down</div>
+      </div>
+    `;
+  });
+  
+  document.getElementById('debtTracker').innerHTML = html;
+}
+
+
+function renderDiscoverTimeline() {
+  const balances = JSON.parse(localStorage.getItem('kyra_balances')) || { };
+  const discover = balances.discover || 22344;
+  const spent = JSON.parse(localStorage.getItem('kyra_spending')) || [];
+  
+  const discoverPayments = spent
+    .filter(s => s.category === 'discover')
+    .reduce((sum, s) => sum + parseFloat(s.amount || 0), 0);
+  
+  const remaining = discover;
+  let monthsToZero = remaining > 0 ? Math.ceil(remaining / (discoverPayments / Math.max(spent.filter(s => s.category === 'discover').length, 1))) : 0;
+  if (!isFinite(monthsToZero) || monthsToZero > 100) monthsToZero = '?';
+  
+  const avgPayment = discoverPayments > 0 ? (discoverPayments / Math.max(spent.filter(s => s.category === 'discover').length, 1)).toFixed(2) : '0';
+  
+  document.getElementById('discoverTimeline').innerHTML = `
+    <div style="background: rgba(255, 107, 107, 0.1); padding: 12px; border-radius: 8px; margin-bottom: 1rem; border-left: 4px solid #ff6b6b;">
+      <div style="font-size: 13px; color: #c92a2a; margin-bottom: 8px;"><strong>⚠️ PRIORITY:</strong> First pay off Capital One ($328) & American Airlines ($2,561). THEN attack Discover.</div>
+      <div style="font-size: 12px; color: #666;">This timeline tracks Discover only. Your highest-interest cards come first!</div>
+    </div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 1rem;">
+      <div style="text-align: center;">
+        <div style="font-size: 24px; font-weight: 700; color: #ff6b6b;">$${remaining.toFixed(2)}</div>
+        <div style="font-size: 12px; color: #666;">Remaining</div>
+      </div>
+      <div style="text-align: center;">
+        <div style="font-size: 24px; font-weight: 700; color: #4CAF50;">$${avgPayment}</div>
+        <div style="font-size: 12px; color: #666;">Avg per payment</div>
+      </div>
+      <div style="text-align: center;">
+        <div style="font-size: 24px; font-weight: 700; color: #d4af37;">${monthsToZero}</div>
+        <div style="font-size: 12px; color: #666;">Months to Zero*</div>
+      </div>
+    </div>
+    <div style="font-size: 12px; color: #666; background: rgba(0,0,0,0.03); padding: 12px; border-radius: 8px;">
+      <strong>*How it works:</strong> This estimate updates as you log Discover payments. It's based on your recent payment pattern. In August & February, when the $10k deposits hit, you'll make massive payments and crush this timeline! The real payoff happens after Capital One & American Airlines are gone.
+    </div>
+  `;
+}
+
+function renderTasks() {
+  const list = document.getElementById('taskList');
+  if (tasks.length === 0) {
+    list.innerHTML = '<div class="empty-state">No tasks yet. Add one above!</div>';
+    return;
+  }
+  list.innerHTML = tasks.map((task, idx) => {
+    // Convert URLs in task text to clickable links
+    let taskText = task.text;
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+    taskText = taskText.replace(urlRegex, (match) => `<a href="${match}" target="_blank" style="color: var(--pink-dark); text-decoration: underline; font-weight: 500;">${match}</a>`);
+    
+    return `
+      <div class="task-item ${task.completed ? 'completed' : ''}">
+        <input type="checkbox" ${task.completed ? 'checked' : ''} onchange="toggleTask(${idx})">
+        <span>${taskText}</span>
+        ${task.completed ? '<span class="earned"><span style="font-size: 14px;">⭐</span> +1 star</span>' : ''}
+        <button class="task-delete" onclick="deleteTask(${idx})">Delete</button>
+      </div>
+    `;
+  }).join('');
+}
+
+function renderSpending() {
+  const list = document.getElementById('spendingList');
+  if (spending.length === 0) {
+    list.innerHTML = '<div class="empty-state">No spending logged yet. Start tracking to earn stars! 💰</div>';
+    return;
+  }
+  list.innerHTML = spending.map((item, idx) => `
+    <div class="spending-item">
+      <div>
+        <div>${item.desc}</div>
+        <div class="spending-category">${item.category}</div>
+      </div>
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <div class="spending-amount">$${parseFloat(item.amount).toFixed(2)}</div>
+        <span style="background: var(--gold); color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 600; white-space: nowrap;">⭐ +1</span>
+        <button onclick="deleteSpending(${idx})" style="background: #ff6b6b; color: white; border: none; padding: 4px 8px; border-radius: 4px; font-size: 11px; cursor: pointer;">Delete</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function toggleTask(idx) {
+  tasks[idx].completed = !tasks[idx].completed;
+  saveTasks();
+  updateStarCount();
+  renderTasks();
+}
+
+function deleteTask(idx) {
+  tasks.splice(idx, 1);
+  saveTasks();
+  updateStarCount();
+  renderTasks();
+}
+
+document.getElementById('taskForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const input = document.getElementById('taskInput');
+  if (input.value.trim()) {
+    tasks.push({ text: input.value, completed: false });
+    input.value = '';
+    saveTasks();
+    updateStarCount();
+    renderTasks();
+  }
+});
+
+document.getElementById('spendingForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const date = document.getElementById('spendDate').value;
+  const desc = document.getElementById('spendDesc').value;
+  const category = document.getElementById('spendCategory').value;
+  const amount = document.getElementById('spendAmount').value;
+  if (date && desc && category && amount) {
+    spending.unshift({ date, desc, category, amount });
+    document.getElementById('spendingForm').reset();
+    saveSpending();
+    renderSpending();
+    renderGoals();
+    renderDiscoverTimeline();
+    updateStarCount();
+  }
+});
+
+document.getElementById('incomeForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const date = document.getElementById('incomeDate').value;
+  const desc = document.getElementById('incomeDesc').value;
+  const category = document.getElementById('incomeCategory').value;
+  const amount = document.getElementById('incomeAmount').value;
+  if (date && desc && category && amount) {
+    income.unshift({ date, desc, category, amount });
+    document.getElementById('incomeForm').reset();
+    saveIncome();
+    renderIncome();
+    updateStarCount();
+  }
+});
+
+document.getElementById('spendDate').valueAsDate = new Date();
+document.getElementById('incomeDate').valueAsDate = new Date();
+
+let accountHistory = JSON.parse(localStorage.getItem('kyra_accountHistory')) || [];
+let balanceChart = null;
+
+function loadAccountBalances() {
+  const balances = JSON.parse(localStorage.getItem('kyra_balances')) || { 
+    checking: 997,
+    hysa: 0, 
+    discover: 22344,
+    aa: 2561,
+    capone: 328.33,
+    medical: 3554,
+    student: 104358
+  };
+  document.getElementById('checkingInput').value = balances.checking || '';
+  document.getElementById('hysaInput').value = balances.hysa || '';
+  document.getElementById('discoverInput').value = balances.discover || '';
+  document.getElementById('aaInput').value = balances.aa || '';
+  document.getElementById('caponeInput').value = balances.capone || '';
+  document.getElementById('medicalInput').value = balances.medical || '';
+  document.getElementById('studentInput').value = balances.student || '';
+  displayAccountBalances(balances);
+}
+
+function updateAccountBalances() {
+  const checking = parseFloat(document.getElementById('checkingInput').value) || 0;
+  const hysa = parseFloat(document.getElementById('hysaInput').value) || 0;
+  const discover = parseFloat(document.getElementById('discoverInput').value) || 0;
+  const aa = parseFloat(document.getElementById('aaInput').value) || 0;
+  const capone = parseFloat(document.getElementById('caponeInput').value) || 0;
+  const medical = parseFloat(document.getElementById('medicalInput').value) || 0;
+  const student = parseFloat(document.getElementById('studentInput').value) || 0;
+  
+  const balances = { checking, hysa, discover, aa, capone, medical, student };
+  localStorage.setItem('kyra_balances', JSON.stringify(balances));
+  
+  const today = new Date().toISOString().split('T')[0];
+  accountHistory.push({ date: today, checking, hysa, discover, aa, capone, medical, student });
+  localStorage.setItem('kyra_accountHistory', JSON.stringify(accountHistory));
+  
+  // Track this update and award a star
+  updates.push({ date: today });
+  localStorage.setItem('kyra_updates', JSON.stringify(updates));
+  
+  displayAccountBalances(balances);
+  renderChart();
+  renderDebtTracker();
+  renderDiscoverTimeline();
+  updateStarCount();
+}
+
+function displayAccountBalances(balances) {
+  document.getElementById('checkingDisplay').textContent = '$' + balances.checking.toFixed(2);
+  document.getElementById('hysaDisplay').textContent = '$' + balances.hysa.toFixed(2);
+  
+  const totalDebt = balances.discover + balances.aa + balances.capone + balances.medical + balances.student;
+  document.getElementById('totalDebtDisplay').textContent = '$' + totalDebt.toFixed(2);
+  
+  const liquidAssets = balances.checking + balances.hysa;
+  document.getElementById('liquidDisplay').textContent = '$' + liquidAssets.toFixed(2);
+  
+  const netWorth = liquidAssets - totalDebt;
+  const netWorthEl = document.getElementById('netWorthDisplay');
+  netWorthEl.textContent = '$' + netWorth.toFixed(2);
+  netWorthEl.parentElement.style.color = netWorth >= 0 ? 'var(--pink-dark)' : '#c92a2a';
+}
+
+function renderChart() {
+  const ctx = document.getElementById('balanceChart').getContext('2d');
+  
+  const dates = accountHistory.map(h => h.date).slice(-12);
+  const checkingData = accountHistory.map(h => h.checking).slice(-12);
+  const hysaData = accountHistory.map(h => h.hysa).slice(-12);
+  const discoverData = accountHistory.map(h => -h.discover).slice(-12);
+  const aaData = accountHistory.map(h => -h.aa).slice(-12);
+  const caponeData = accountHistory.map(h => -h.capone).slice(-12);
+  const medicalData = accountHistory.map(h => -h.medical).slice(-12);
+  const studentData = accountHistory.map(h => -h.student).slice(-12);
+  
+  if (balanceChart) {
+    balanceChart.destroy();
+  }
+  
+  balanceChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: dates.length > 0 ? dates : ['No data yet'],
+      datasets: [
+        {
+          label: 'Checking',
+          data: checkingData.length > 0 ? checkingData : [0],
+          borderColor: '#e87ba4',
+          backgroundColor: 'rgba(232, 123, 164, 0.1)',
+          borderWidth: 2,
+          tension: 0.4,
+          fill: false,
+          yAxisID: 'y'
+        },
+        {
+          label: 'HYSA',
+          data: hysaData.length > 0 ? hysaData : [0],
+          borderColor: '#d4af37',
+          backgroundColor: 'rgba(212, 175, 55, 0.1)',
+          borderWidth: 2,
+          tension: 0.4,
+          fill: false,
+          yAxisID: 'y'
+        },
+        {
+          label: 'Discover (debt)',
+          data: discoverData.length > 0 ? discoverData : [0],
+          borderColor: '#ff6b6b',
+          backgroundColor: 'rgba(255, 107, 107, 0.05)',
+          borderWidth: 2,
+          tension: 0.4,
+          fill: false,
+          yAxisID: 'y'
+        },
+        {
+          label: 'American Airlines (debt)',
+          data: aaData.length > 0 ? aaData : [0],
+          borderColor: '#ff9999',
+          borderWidth: 2,
+          tension: 0.4,
+          fill: false,
+          yAxisID: 'y',
+          borderDash: [5, 5]
+        },
+        {
+          label: 'Capital One (debt)',
+          data: caponeData.length > 0 ? caponeData : [0],
+          borderColor: '#ffb3b3',
+          borderWidth: 2,
+          tension: 0.4,
+          fill: false,
+          yAxisID: 'y',
+          borderDash: [5, 5]
+        },
+        {
+          label: 'Medical Debt',
+          data: medicalData.length > 0 ? medicalData : [0],
+          borderColor: '#99ccff',
+          borderWidth: 2,
+          tension: 0.4,
+          fill: false,
+          yAxisID: 'y',
+          borderDash: [5, 5]
+        },
+        {
+          label: 'Student Loans (PSLF)',
+          data: studentData.length > 0 ? studentData : [0],
+          borderColor: '#9b7ddb',
+          borderWidth: 2,
+          tension: 0.4,
+          fill: false,
+          yAxisID: 'y'
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          display: true,
+          position: 'top',
+          labels: {
+            font: { size: 11 },
+            padding: 10
+          }
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          position: 'left'
+        }
+      }
+    }
+  });
+}
+
+function renderQuestions() {
+  const container = document.getElementById('questionsDisplay');
+  
+  if (questions.length === 0) {
+    container.innerHTML = '<div class="empty-state">No questions yet. Ask away!</div>';
+    return;
+  }
+  
+  let html = '';
+  questions.forEach((q, idx) => {
+    html += `
+      <div style="background: #f9f9f9; padding: 12px; border-radius: 8px; margin-bottom: 12px; border-left: 4px solid var(--pink-mid);">
+        <div style="font-weight: 600; color: #333; margin-bottom: 8px;">❓ Kyra asked:</div>
+        <div style="color: #555; margin-bottom: 12px; font-size: 13px;">${q.question}</div>
+        
+        ${q.answer ? `
+          <div style="background: rgba(76, 175, 80, 0.1); padding: 10px; border-radius: 6px; border-left: 3px solid #4CAF50; margin-bottom: 8px;">
+            <div style="font-weight: 600; color: #2e7d32; margin-bottom: 6px; font-size: 13px;">💬 Julie answered:</div>
+            <div style="color: #333; font-size: 13px;">${q.answer}</div>
+          </div>
+          <div style="font-size: 11px; color: #999;">Answered on ${q.answerDate}</div>
+        ` : `
+          <div style="background: rgba(255, 193, 7, 0.1); padding: 10px; border-radius: 6px; border-left: 3px solid #FFC107; margin-bottom: 8px;">
+            <div style="font-size: 12px; color: #F57F17;">⏳ Waiting for Julie's answer...</div>
+          </div>
+          <div style="display: flex; gap: 8px;">
+            <input type="text" id="answer-${idx}" placeholder="Julie: Type your answer here..." style="flex: 1; padding: 8px; border: 1px solid #ddd; border-radius: 4px; font-size: 12px;">
+            <button onclick="addAnswer(${idx})" style="background: #4CAF50; color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer; font-weight: 600; font-size: 12px;">Answer</button>
+          </div>
+        `}
+        
+        <button onclick="deleteQuestion(${idx})" style="background: #ff6b6b; color: white; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer; font-size: 11px; margin-top: 8px;">Delete</button>
+      </div>
+    `;
+  });
+  
+  container.innerHTML = html;
+}
+
+function addQuestion() {
+  const input = document.getElementById('questionInput');
+  const question = input.value.trim();
+  
+  if (!question) return;
+  
+  const today = new Date().toISOString().split('T')[0];
+  questions.push({ question, answer: null, answerDate: null, date: today });
+  localStorage.setItem('kyra_questions', JSON.stringify(questions));
+  
+  input.value = '';
+  renderQuestions();
+}
+
+function addAnswer(idx) {
+  const answerInput = document.getElementById(`answer-${idx}`);
+  const answer = answerInput.value.trim();
+  
+  if (!answer) return;
+  
+  const today = new Date().toISOString().split('T')[0];
+  questions[idx].answer = answer;
+  questions[idx].answerDate = today;
+  localStorage.setItem('kyra_questions', JSON.stringify(questions));
+  
+  renderQuestions();
+}
+
+function deleteQuestion(idx) {
+  if (confirm('Delete this question?')) {
+    questions.splice(idx, 1);
+    localStorage.setItem('kyra_questions', JSON.stringify(questions));
+    renderQuestions();
+  }
+}
+
+loadAccountBalances();
+renderChart();
+
+renderTasks();
+renderGoals();
+renderSpending();
+renderIncome();
+renderReceivables();
+renderDebtTracker();
+renderDiscoverTimeline();
+renderQuestions();
+updateStarCount();
+
+document.getElementById('questionForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  addQuestion();
+});
+</script>
+
+</body>
+</html>
