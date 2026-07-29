@@ -156,14 +156,18 @@
     .spending-form { 
       display: grid; 
       gap: 8px; 
-      margin-bottom: 1rem; 
+      margin-bottom: 1rem;
+      max-width: 100%;
+      width: 100%;
     }
 
     .spending-form input, .spending-form select { 
       padding: 10px 12px; 
       border: 1px solid var(--pink-light); 
       border-radius: 8px; 
-      font-size: 14px; 
+      font-size: 14px;
+      width: 100%;
+      box-sizing: border-box;
     }
 
     .spending-form button { 
