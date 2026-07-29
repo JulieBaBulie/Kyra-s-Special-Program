@@ -641,23 +641,6 @@
     <div id="goalsDisplay"></div>
   </div>
 
-  <div class="section">
-    <h2><span class="section-icon">❓</span> Questions for Julie</h2>
-    <div style="background: var(--pink-light); padding: 12px; border-radius: 8px; margin-bottom: 1rem; font-size: 13px;">
-      <strong style="color: var(--pink-dark);">Kyra:</strong> Ask questions as they come up. <strong style="color: #4CAF50;">Julie:</strong> Answer them here and they'll appear below.
-    </div>
-    
-    <div style="margin-bottom: 1.5rem;">
-      <div style="font-weight: 600; margin-bottom: 8px; font-size: 14px;">💬 Ask a Question</div>
-      <form id="questionForm" style="display: flex; gap: 8px;">
-        <input type="text" id="questionInput" placeholder="Type your question for Julie..." style="flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 13px;" required>
-        <button type="submit" style="background: var(--pink-mid); color: white; border: none; padding: 10px 16px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 13px;">Send</button>
-      </form>
-    </div>
-    
-    <div id="questionsDisplay"></div>
-  </div>
-
 <script>
 let tasks = JSON.parse(localStorage.getItem('kyra_tasks')) || [
   { text: 'Open Capital One 360 HYSA account (4% APY high-yield savings): https://www.capitalone.com/bank/savings-accounts/360-savings/ — URGENT: need before $10k arrives in August', completed: false },
@@ -692,8 +675,7 @@ let receivables = JSON.parse(localStorage.getItem('kyra_receivables')) || [
   { person: 'Jack', amount: 350, paid: false },
   { person: 'Freida', amount: 250, paid: false }
 ];
-let reminders = JSON.parse(localStorage.getItem('kyra_reminders')) || [];
-let questions = JSON.parse(localStorage.getItem('kyra_questions')) || [];
+
 
 const spendingGoals = {
   essentials: {
@@ -1356,81 +1338,6 @@ function renderChart() {
   });
 }
 
-function renderQuestions() {
-  const container = document.getElementById('questionsDisplay');
-  
-  if (questions.length === 0) {
-    container.innerHTML = '<div class="empty-state">No questions yet. Ask away!</div>';
-    return;
-  }
-  
-  let html = '';
-  questions.forEach((q, idx) => {
-    html += `
-      <div style="background: #f9f9f9; padding: 12px; border-radius: 8px; margin-bottom: 12px; border-left: 4px solid var(--pink-mid);">
-        <div style="font-weight: 600; color: #333; margin-bottom: 8px;">❓ Kyra asked:</div>
-        <div style="color: #555; margin-bottom: 12px; font-size: 13px;">${q.question}</div>
-        
-        ${q.answer ? `
-          <div style="background: rgba(76, 175, 80, 0.1); padding: 10px; border-radius: 6px; border-left: 3px solid #4CAF50; margin-bottom: 8px;">
-            <div style="font-weight: 600; color: #2e7d32; margin-bottom: 6px; font-size: 13px;">💬 Julie answered:</div>
-            <div style="color: #333; font-size: 13px;">${q.answer}</div>
-          </div>
-          <div style="font-size: 11px; color: #999;">Answered on ${q.answerDate}</div>
-        ` : `
-          <div style="background: rgba(255, 193, 7, 0.1); padding: 10px; border-radius: 6px; border-left: 3px solid #FFC107; margin-bottom: 8px;">
-            <div style="font-size: 12px; color: #F57F17;">⏳ Waiting for Julie's answer...</div>
-          </div>
-          <div style="display: flex; gap: 8px;">
-            <input type="text" id="answer-${idx}" placeholder="Julie: Type your answer here..." style="flex: 1; padding: 8px; border: 1px solid #ddd; border-radius: 4px; font-size: 12px;">
-            <button onclick="addAnswer(${idx})" style="background: #4CAF50; color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer; font-weight: 600; font-size: 12px;">Answer</button>
-          </div>
-        `}
-        
-        <button onclick="deleteQuestion(${idx})" style="background: #ff6b6b; color: white; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer; font-size: 11px; margin-top: 8px;">Delete</button>
-      </div>
-    `;
-  });
-  
-  container.innerHTML = html;
-}
-
-function addQuestion() {
-  const input = document.getElementById('questionInput');
-  const question = input.value.trim();
-  
-  if (!question) return;
-  
-  const today = new Date().toISOString().split('T')[0];
-  questions.push({ question, answer: null, answerDate: null, date: today });
-  localStorage.setItem('kyra_questions', JSON.stringify(questions));
-  
-  input.value = '';
-  renderQuestions();
-}
-
-function addAnswer(idx) {
-  const answerInput = document.getElementById(`answer-${idx}`);
-  const answer = answerInput.value.trim();
-  
-  if (!answer) return;
-  
-  const today = new Date().toISOString().split('T')[0];
-  questions[idx].answer = answer;
-  questions[idx].answerDate = today;
-  localStorage.setItem('kyra_questions', JSON.stringify(questions));
-  
-  renderQuestions();
-}
-
-function deleteQuestion(idx) {
-  if (confirm('Delete this question?')) {
-    questions.splice(idx, 1);
-    localStorage.setItem('kyra_questions', JSON.stringify(questions));
-    renderQuestions();
-  }
-}
-
 loadAccountBalances();
 renderChart();
 
@@ -1441,13 +1348,7 @@ renderIncome();
 renderReceivables();
 renderDebtTracker();
 renderDiscoverTimeline();
-renderQuestions();
 updateStarCount();
-
-document.getElementById('questionForm').addEventListener('submit', (e) => {
-  e.preventDefault();
-  addQuestion();
-});
 </script>
 
 </body>
