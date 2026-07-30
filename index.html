@@ -107,7 +107,9 @@
       padding: 12px; 
       background: var(--pink-light); 
       border-radius: 8px; 
-      margin-bottom: 8px; 
+      margin-bottom: 8px;
+      transition: all 0.2s;
+      border-top: 3px solid transparent;
     }
 
     .task-item input[type="checkbox"] { 
@@ -367,7 +369,42 @@
     <div id="achievementDisplay" style="margin-top: 1rem; font-size: 20px; text-align: center;"></div>
   </div>
 
-  <div class="section">
+  <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(212,175,55,0.3); border-radius: 12px; padding: 1rem; margin: 1rem 0; max-width: 600px; margin-left: auto; margin-right: auto;">
+    <div style="font-size: 12px; font-weight: 600; color: #d4af37; margin-bottom: 12px; text-align: center;">⭐ ACHIEVEMENT MILESTONES</div>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 12px;">
+      <div style="background: rgba(212,175,55,0.1); padding: 12px; border-radius: 8px; border-left: 3px solid #d4af37; text-align: center;">
+        <div style="font-size: 20px; margin-bottom: 6px;">🐢</div>
+        <div style="font-size: 13px; color: #d4af37; font-weight: 600;">Turtle</div>
+        <div style="font-size: 12px; color: #999;">25 stars</div>
+      </div>
+      <div style="background: rgba(212,175,55,0.1); padding: 12px; border-radius: 8px; border-left: 3px solid #d4af37; text-align: center;">
+        <div style="font-size: 20px; margin-bottom: 6px;">🐰</div>
+        <div style="font-size: 13px; color: #d4af37; font-weight: 600;">Bunny</div>
+        <div style="font-size: 12px; color: #999;">50 stars (2 turtles)</div>
+      </div>
+      <div style="background: rgba(212,175,55,0.1); padding: 12px; border-radius: 8px; border-left: 3px solid #d4af37; text-align: center;">
+        <div style="font-size: 20px; margin-bottom: 6px;">🐉</div>
+        <div style="font-size: 13px; color: #d4af37; font-weight: 600;">Dragon</div>
+        <div style="font-size: 12px; color: #999;">125 stars</div>
+      </div>
+      <div style="background: rgba(212,175,55,0.1); padding: 12px; border-radius: 8px; border-left: 3px solid #d4af37; text-align: center;">
+        <div style="font-size: 20px; margin-bottom: 6px;">🏰</div>
+        <div style="font-size: 13px; color: #d4af37; font-weight: 600;">Castle</div>
+        <div style="font-size: 12px; color: #999;">250 stars (2 dragons)</div>
+      </div>
+      <div style="background: rgba(212,175,55,0.1); padding: 12px; border-radius: 8px; border-left: 3px solid #d4af37; text-align: center;">
+        <div style="font-size: 20px; margin-bottom: 6px;">🪐</div>
+        <div style="font-size: 13px; color: #d4af37; font-weight: 600;">Planet</div>
+        <div style="font-size: 12px; color: #999;">500 stars (2 castles)</div>
+      </div>
+      <div style="background: rgba(212,175,55,0.1); padding: 12px; border-radius: 8px; border-left: 3px solid #d4af37; text-align: center;">
+        <div style="font-size: 20px; margin-bottom: 6px;">🦛</div>
+        <div style="font-size: 13px; color: #d4af37; font-weight: 600;">Baby Hippo</div>
+        <div style="font-size: 12px; color: #999;">1000 stars (2 planets)</div>
+      </div>
+    </div>
+  </div>
+
   <div class="section">
     <h2><span class="section-icon">💰</span> Track Spending (Log Every Purchase!)</h2>
     <div style="background: var(--gold-light); padding: 12px; border-radius: 8px; margin-bottom: 1rem; font-size: 13px;">
@@ -672,6 +709,7 @@ let tasks = JSON.parse(localStorage.getItem('kyra_tasks')) || [
   { text: 'Get full utility payoff from Freida ($250) — use Splitwise or Venmo to send reminders', completed: false },
   { text: 'Explore other sources of income (Wyzant tutoring, Chegg, freelance writing, etc.)', completed: false }
 ];
+let tasksCompleted = JSON.parse(localStorage.getItem('kyra_tasksCompleted')) || 0;
 let spending = JSON.parse(localStorage.getItem('kyra_spending')) || [];
 let income = JSON.parse(localStorage.getItem('kyra_income')) || [];
 let updates = JSON.parse(localStorage.getItem('kyra_updates')) || [];
@@ -777,7 +815,7 @@ function deleteSpending(idx) {
 }
 
 function updateStarCount() {
-  const completedTasks = tasks.filter(t => t.completed).length;
+  const completedTasks = tasksCompleted;  // Use permanent counter, not current list
   const totals = calculateCategoryTotals();
   
   // 1 star per spending entry logged
@@ -813,16 +851,20 @@ function updateStarCount() {
   const totalStars = completedTasks + budgetStars + spendingStars + incomeStars + updateStars + reminderStars;
   document.getElementById('totalStars').textContent = totalStars;
   
-  // Calculate achievements (25 stars = 1 turtle, 5 turtles = dragon, 2 dragons = castle, 2 castles = planet)
+  // Calculate achievements (25=turtle, 50=bunny, 125=dragon, 250=castle, 500=planet, 1000=baby hippo)
   const turtles = Math.floor(totalStars / 25);
-  const dragons = Math.floor(turtles / 5);
-  const castles = Math.floor(dragons / 2);
-  const planets = Math.floor(castles / 2);
+  const bunnies = Math.floor(totalStars / 50);
+  const dragons = Math.floor(totalStars / 125);
+  const castles = Math.floor(totalStars / 250);
+  const planets = Math.floor(totalStars / 500);
+  const babyHippos = Math.floor(totalStars / 1000);
   
   let achievementEmoji = '';
-  if (planets > 0) achievementEmoji = '🪐 '.repeat(planets);
+  if (babyHippos > 0) achievementEmoji = '🦛 '.repeat(babyHippos);
+  else if (planets > 0) achievementEmoji = '🪐 '.repeat(planets);
   else if (castles > 0) achievementEmoji = '🏰 '.repeat(castles);
   else if (dragons > 0) achievementEmoji = '🐉 '.repeat(dragons);
+  else if (bunnies > 0) achievementEmoji = '🐰 '.repeat(bunnies);
   else if (turtles > 0) achievementEmoji = '🐢 '.repeat(turtles);
   else achievementEmoji = '✨ (Level up at 25 stars!)';
   
@@ -831,14 +873,16 @@ function updateStarCount() {
   // Show milestone celebrations
   let celebration = '';
   if (totalStars === 25) celebration = '🐢 Turtle! First milestone reached!';
-  else if (totalStars === 50) celebration = '🐢🐢 Two turtles! Building momentum!';
-  else if (totalStars === 100) celebration = '🐉 Dragon! Halfway to castle!';
-  else if (totalStars === 150) celebration = '🐉 + 🐢🐢🐢 Almost a second dragon!';
-  else if (totalStars === 200) celebration = '🏰 CASTLE! You\'re crushing it!';
-  else if (totalStars === 300) celebration = '🏰🏰 TWO CASTLES! Planet is within reach!';
-  else if (totalStars === 400) celebration = '🪐 PLANET! You\'re a superstar! 🌟';
-  else if (totalStars === 500) celebration = '🪐 + ⭐ 500 STARS! LEGENDARY!';
-  else if (totalStars > 0 && totalStars % 50 === 0) celebration = `✨ ${totalStars} Stars! Keep crushing it!`;
+  else if (totalStars === 50) celebration = '🐰 Bunny! Keep up the momentum!';
+  else if (totalStars === 75) celebration = '🐰 + 🐢🐢 Three-quarters to dragon!';
+  else if (totalStars === 125) celebration = '🐉 Dragon! Crushing it!';
+  else if (totalStars === 150) celebration = '🐉 + 🐢 Stay focused on your goals!';
+  else if (totalStars === 250) celebration = '🏰 CASTLE! You\'re doing amazing!';
+  else if (totalStars === 375) celebration = '🏰 + 🐉 Halfway to two castles!';
+  else if (totalStars === 500) celebration = '🪐 PLANET! You\'re a SUPERSTAR! 🌟';
+  else if (totalStars === 750) celebration = '🪐 + 🏰 Halfway to Baby Hippo!';
+  else if (totalStars === 1000) celebration = '🦛 BABY HIPPO! YOU ARE UNSTOPPABLE! 🎉';
+  else if (totalStars > 0 && totalStars % 50 === 0) celebration = `✨ ${totalStars} Stars! You\'re awesome!`;
   document.getElementById('starCelebration').textContent = celebration;
 }
 
@@ -1070,7 +1114,7 @@ function renderTasks() {
     taskText = taskText.replace(urlRegex, (match) => `<a href="${match}" target="_blank" style="color: var(--pink-dark); text-decoration: underline; font-weight: 500;">${match}</a>`);
     
     return `
-      <div class="task-item ${task.completed ? 'completed' : ''}">
+      <div class="task-item ${task.completed ? 'completed' : ''}" draggable="true" ondragstart="dragStartTask(event, ${idx})" ondragover="dragOverTask(event)" ondrop="dropTask(event, ${idx})" ondragend="dragEndTask(event)" style="cursor: move; position: relative;">
         <input type="checkbox" ${task.completed ? 'checked' : ''} onchange="toggleTask(${idx})">
         <span>${taskText}</span>
         ${task.completed ? '<span class="earned"><span style="font-size: 14px;">⭐</span> +1 star</span>' : ''}
@@ -1102,6 +1146,11 @@ function renderSpending() {
 }
 
 function toggleTask(idx) {
+  if (!tasks[idx].completed) {
+    // Task is being marked as completed - increment counter
+    tasksCompleted++;
+    localStorage.setItem('kyra_tasksCompleted', JSON.stringify(tasksCompleted));
+  }
   tasks[idx].completed = !tasks[idx].completed;
   saveTasks();
   updateStarCount();
@@ -1113,6 +1162,51 @@ function deleteTask(idx) {
   saveTasks();
   updateStarCount();
   renderTasks();
+}
+
+let draggedTaskIdx = null;
+
+function dragStartTask(e, idx) {
+  draggedTaskIdx = idx;
+  e.dataTransfer.effectAllowed = 'move';
+  e.target.style.opacity = '0.5';
+}
+
+function dragOverTask(e) {
+  e.preventDefault();
+  e.dataTransfer.dropEffect = 'move';
+  e.target.closest('.task-item').style.borderTop = '3px solid var(--pink-dark)';
+}
+
+function dropTask(e, idx) {
+  e.preventDefault();
+  if (draggedTaskIdx !== null && draggedTaskIdx !== idx) {
+    const draggedTask = tasks[draggedTaskIdx];
+    tasks.splice(draggedTaskIdx, 1);
+    if (idx > draggedTaskIdx) {
+      tasks.splice(idx - 1, 0, draggedTask);
+    } else {
+      tasks.splice(idx, 0, draggedTask);
+    }
+    saveTasks();
+    renderTasks();
+  }
+}
+
+function dragEndTask(e) {
+  e.target.style.opacity = '1';
+  document.querySelectorAll('.task-item').forEach(item => {
+    item.style.borderTop = 'none';
+  });
+  draggedTaskIdx = null;
+}
+
+function attachTaskDragListeners() {
+  document.querySelectorAll('.task-item').forEach(item => {
+    item.addEventListener('dragleave', () => {
+      item.style.borderTop = 'none';
+    });
+  });
 }
 
 document.getElementById('taskForm').addEventListener('submit', e => {
