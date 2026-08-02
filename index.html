@@ -429,29 +429,6 @@
   </div>
 
   <div class="section">
-    <h2><span class="section-icon">💵</span> Track Income (Log Extra Money!)</h2>
-    <div style="background: rgba(76, 175, 80, 0.1); padding: 12px; border-radius: 8px; margin-bottom: 1rem; font-size: 13px;">
-      <strong style="color: #2e7d32;">Earn ⭐ stars for every dollar earned!</strong> Tutoring, selling stuff, Copeca, babysitting Walter—log it all! Each entry = 1 star. Watch your income grow!
-    </div>
-    <form class="spending-form" id="incomeForm">
-      <input type="date" id="incomeDate" required>
-      <input type="text" id="incomeDesc" placeholder="How did you earn this?" required>
-      <select id="incomeCategory" required>
-        <option value="">Select source</option>
-        <option value="tutoring">Tutoring</option>
-        <option value="sell">Sell Your Stuff (Poshmark, Depop, etc.)</option>
-        <option value="copeca">Make & Sell at Copeca</option>
-        <option value="grading">Grading for Other Depts</option>
-        <option value="babysit">Babysit Walter</option>
-        <option value="other">Other</option>
-      </select>
-      <input type="number" id="incomeAmount" placeholder="Amount" step="0.01" required>
-      <button type="submit">Log income</button>
-    </form>
-    <div id="incomeList"></div>
-  </div>
-
-  <div class="section">
     <h2><span class="section-icon">✓</span> Tasks & Goals</h2>
     <div style="background: var(--pink-light); padding: 12px; border-radius: 8px; margin-bottom: 1rem; font-size: 13px;">
       <strong style="color: var(--pink-dark);">How to earn stars:</strong> Check off each task as you complete it. Every completed task = <span class="star-icon" style="font-size: 16px;">⭐</span> 1 gold star. Your total stars are shown at the top!
@@ -494,10 +471,6 @@
         <input type="number" id="checkingInput" placeholder="$0" step="0.01">
       </div>
       <div class="account-input">
-        <label>HYSA (Capital One)</label>
-        <input type="number" id="hysaInput" placeholder="$0" step="0.01">
-      </div>
-      <div class="account-input">
         <label>Discover Card (debt)</label>
         <input type="number" id="discoverInput" placeholder="$0" step="0.01">
       </div>
@@ -529,10 +502,6 @@
         <div class="allocation-label">Checking</div>
         <div class="allocation-amount" id="checkingDisplay">$0</div>
       </div>
-      <div class="allocation-card">
-        <div class="allocation-label">HYSA</div>
-        <div class="allocation-amount" id="hysaDisplay">$0</div>
-      </div>
       <div class="allocation-card" style="background: linear-gradient(135deg, #ffcccc 0%, rgba(255, 100, 100, 0.1) 100%); border-color: #ff6b6b;">
         <div class="allocation-label" style="color: #c92a2a;">Total Debt</div>
         <div class="allocation-amount" style="color: #c92a2a;" id="totalDebtDisplay">$0</div>
@@ -549,42 +518,26 @@
   </div>
 
   <div class="section">
+    <h2><span class="section-icon">🎯</span> Spending Goals & Debt Payoff</h2>
+    <div id="goalsDisplay"></div>
+  </div>
+
+  <div class="section">
     <h2><span class="section-icon">📅</span> August & February: When Your $10k Student Loan Hits (EARN STARS!)</h2>
     
     <div style="background: var(--pink-light); padding: 12px; border-radius: 8px; margin-bottom: 1.5rem; font-size: 13px;">
-      <strong style="color: var(--pink-dark);">How it works:</strong> Twice a year, your student loan deposit arrives. The $6k aunt gift (August only) combines with the loan. Here's the exact plan:
+      <strong style="color: var(--pink-dark);">The strategy:</strong> Throw ALL the cash at your credit cards immediately. Don't park money in savings while paying 25%+ interest — that loses money. Use your Discover card to cover the monthly gap in living expenses instead. Every dollar that pays down a card saves you 25-28% in interest.
     </div>
 
     <div style="background: rgba(232, 123, 164, 0.08); padding: 1rem; border-radius: 8px; border-left: 4px solid var(--pink-dark); margin-bottom: 1.5rem;">
       <div style="font-weight: 600; margin-bottom: 12px; color: var(--pink-dark);">📋 Action Steps (do these in order):</div>
       <ol style="margin: 0; padding-left: 20px; line-height: 2;">
-        <li><strong>Deposit to HYSA:</strong> $10k student loan + $6k aunt gift (August only) = combine in Capital One 360 HYSA</li>
-        <li><strong>Pay off Capital One completely:</strong> $328.33 (HIGHEST interest rate @ 27.74%) — STOP USING THIS CARD</li>
-        <li><strong>Pay off American Airlines completely:</strong> $2,561 (2ND highest @ 27.49%) — STOP USING THIS CARD</li>
-        <li><strong>Set up auto-transfer:</strong> $1,039/month from HYSA → Checking for living expenses (for 6 months)</li>
-        <li><strong>AUGUST: Pay Discover:</strong> $6,876.67 (all remaining after cards + living expenses reserve)</li>
-        <li><strong>HYSA after August payments:</strong> Keep exactly $6,234 (covers $1,039 × 6 months auto-transfers)</li>
-        <li><strong>FEBRUARY: When $10k arrives, repeat:</strong> Pay Discover $3,766, keep $6,234 in HYSA</li>
+        <li><strong>Deposit arrives:</strong> $10k student loan + $6k aunt gift (August only)</li>
+        <li><strong>Pay off Capital One completely:</strong> $328.33 (HIGHEST rate @ 27.74%) — then STOP USING & freeze it</li>
+        <li><strong>Pay off American Airlines completely:</strong> $2,561 (2ND highest @ 27.49%) — then STOP USING & freeze it</li>
+        <li><strong>Throw everything else at Discover:</strong> Every remaining dollar goes to Discover (25.49%)</li>
+        <li><strong>Cover the monthly gap with Discover:</strong> Your income is ~$1,039/month short of expenses. Put essentials on Discover to bridge the gap — you're already carrying that balance, so this is cheaper than keeping cash in savings while paying interest</li>
       </ol>
-    </div>
-
-    <div style="margin-bottom: 1.5rem;">
-      <div style="font-weight: 600; margin-bottom: 12px;">The Math:</div>
-      <div class="allocation-grid">
-        <div class="allocation-card">
-          <div class="allocation-label">💰 Student Loan</div>
-          <div class="allocation-amount">$10,000</div>
-        </div>
-        <div class="allocation-card" style="opacity: 0.8;">
-          <div class="allocation-label">🎁 Aunt's Gift (Aug)</div>
-          <div class="allocation-amount">$6,000</div>
-        </div>
-        <div class="allocation-card">
-          <div class="allocation-label">= Into HYSA</div>
-          <div class="allocation-amount">$16,000*</div>
-          <div style="font-size: 11px; color: #666; margin-top: 4px;">*$10k in Feb</div>
-        </div>
-      </div>
     </div>
 
     <div style="margin-bottom: 1.5rem; background: rgba(255, 215, 0, 0.1); padding: 1rem; border-radius: 8px;">
@@ -593,20 +546,17 @@
         <div class="allocation-card" style="background: linear-gradient(135deg, #90EE90 0%, rgba(76, 175, 80, 0.1) 100%); border-color: #4CAF50;">
           <div class="allocation-label" style="color: #2e7d32;">✓ Pay Capital One</div>
           <div class="allocation-amount" style="color: #2e7d32;">-$328.33</div>
+          <div style="font-size: 11px; color: #2e7d32; margin-top: 4px;">Then freeze it</div>
         </div>
         <div class="allocation-card" style="background: linear-gradient(135deg, #90EE90 0%, rgba(76, 175, 80, 0.1) 100%); border-color: #4CAF50;">
           <div class="allocation-label" style="color: #2e7d32;">✓ Pay American Airlines</div>
           <div class="allocation-amount" style="color: #2e7d32;">-$2,561</div>
-        </div>
-        <div class="allocation-card">
-          <div class="allocation-label">↩️ Reserve for auto-transfers</div>
-          <div class="allocation-amount">$6,234</div>
-          <div style="font-size: 11px; color: #666; margin-top: 4px;">$1,039 × 6 mo</div>
+          <div style="font-size: 11px; color: #2e7d32; margin-top: 4px;">Then freeze it</div>
         </div>
         <div class="allocation-card" style="background: linear-gradient(135deg, #ffcccc 0%, rgba(255, 100, 100, 0.1) 100%); border-color: #ff6b6b;">
           <div class="allocation-label" style="color: #c92a2a;">→ Pay Discover</div>
-          <div class="allocation-amount" style="color: #c92a2a;">$6,876.67</div>
-          <div style="font-size: 11px; color: #c92a2a; margin-top: 4px;">Remaining</div>
+          <div class="allocation-amount" style="color: #c92a2a;">$13,110.67</div>
+          <div style="font-size: 11px; color: #c92a2a; margin-top: 4px;">Everything else!</div>
         </div>
       </div>
     </div>
@@ -614,32 +564,19 @@
     <div style="margin-bottom: 1.5rem; background: rgba(255, 215, 0, 0.1); padding: 1rem; border-radius: 8px;">
       <div style="font-weight: 600; margin-bottom: 12px;">FEBRUARY (no aunt gift = $10,000 only):</div>
       <div class="allocation-grid">
-        <div class="allocation-card">
-          <div class="allocation-label">↩️ Reserve for auto-transfers</div>
-          <div class="allocation-amount">$6,234</div>
-          <div style="font-size: 11px; color: #666; margin-top: 4px;">$1,039 × 6 mo</div>
-        </div>
         <div class="allocation-card" style="background: linear-gradient(135deg, #ffcccc 0%, rgba(255, 100, 100, 0.1) 100%); border-color: #ff6b6b;">
           <div class="allocation-label" style="color: #c92a2a;">→ Pay Discover</div>
-          <div class="allocation-amount" style="color: #c92a2a;">$3,766</div>
-          <div style="font-size: 11px; color: #c92a2a; margin-top: 4px;">Remaining</div>
+          <div class="allocation-amount" style="color: #c92a2a;">$10,000</div>
+          <div style="font-size: 11px; color: #c92a2a; margin-top: 4px;">All of it — cards already paid off</div>
         </div>
       </div>
     </div>
 
     <div style="background: rgba(212, 175, 55, 0.15); padding: 12px; border-radius: 8px; border: 1px solid #d4af37;">
-      <div style="font-size: 13px;"><strong>🎯 The key:</strong> In August, you have $16k. Kill Capital One ($328) + American Airlines ($2,561), then reserve $6,234 for 6 months of living expenses. Attack Discover with the remaining $6,876.67. In February, the $10k arrives again—reserve $6,234, pay Discover $3,766. Every 6 months, repeat. ⭐ Log each payment!</div>
+      <div style="font-size: 13px;"><strong>🎯 The key:</strong> In August, kill Capital One ($328) + American Airlines ($2,561), then dump the remaining $13,110.67 on Discover. Cover your monthly living gap with Discover as needed. In February, the full $10k goes straight to Discover. Every 6 months, all cash attacks the debt. ⭐ Log each payment!</div>
     </div>
   </div>
 
-
-  <div class="section">
-    <h2><span class="section-icon">📊</span> Debt Payoff Tracker (Watch Them Shrink!)</h2>
-    <div style="background: var(--pink-light); padding: 12px; border-radius: 8px; margin-bottom: 1.5rem; font-size: 13px;">
-      <strong style="color: var(--pink-dark);">Update your account balances above to see progress.</strong> Each card shows how much you've paid down. Celebrate every dollar!
-    </div>
-    <div id="debtTracker"></div>
-  </div>
 
   <div class="section">
     <h2><span class="section-icon">⏱️</span> Time to Discover Zero</h2>
@@ -648,43 +585,11 @@
     </div>
   </div>
 
-  <div class="section">
-    <h2><span class="section-icon">💡</span> Quick Income Boost Ideas</h2>
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px;">
-      <div class="allocation-card">
-        <div class="allocation-label">🛍️ Sell Your Stuff</div>
-        <div class="allocation-amount">Variable</div>
-        <div style="font-size: 11px; color: #666; margin-top: 4px;">Poshmark, Depop, Mercari, Marketplace</div>
-      </div>
-      <div class="allocation-card">
-        <div class="allocation-label">🎨 Make & Sell at Copeca</div>
-        <div class="allocation-amount">$50-100/week</div>
-        <div style="font-size: 11px; color: #666; margin-top: 4px;">Grading for other depts ($18-25/hr)</div>
-      </div>
-      <div class="allocation-card">
-        <div class="allocation-label">📚 Tutoring</div>
-        <div class="allocation-amount">$20-40/hr</div>
-        <div style="font-size: 11px; color: #666; margin-top: 4px;">Political science, writing</div>
-      </div>
-      <div class="allocation-card">
-        <div class="allocation-label">🐕 Babysit Walter</div>
-        <div class="allocation-amount">Variable</div>
-        <div style="font-size: 11px; color: #666; margin-top: 4px;">When you have time</div>
-      </div>
-    </div>
-    <div style="background: var(--gold-light); padding: 12px; border-radius: 8px; margin-top: 1rem; font-size: 13px;">
-      <strong>Target:</strong> $300-400/month extra would stabilize your plan and let you attack debt faster.
-    </div>
-  </div>
-
-  <div class="section">
-    <h2><span class="section-icon">🎯</span> Spending Goals & Debt Payoff</h2>
-    <div id="goalsDisplay"></div>
-  </div>
+</div>
 
 <script>
 let tasks = JSON.parse(localStorage.getItem('kyra_tasks')) || [
-  { text: 'Open Capital One 360 HYSA account (4% APY high-yield savings): https://www.capitalone.com/bank/savings-accounts/360-savings/ — URGENT: need before $10k arrives in August', completed: false },
+  { text: 'OPTIONAL: Open Capital One 360 HYSA (4% APY): https://www.capitalone.com/bank/savings-accounts/360-savings/ — useful for any leftover cash, but priority is paying down high-interest debt first', completed: false },
   { text: 'Call clinic/medical provider about $3,554 medical debt — confirm it\'s truly 0% interest. Ask if there\'s ANY way to decrease the amount (hardship program, payment plan adjustment, financial assistance, forgiveness)', completed: false },
   { text: 'Track ALL spending for 30 days to see real numbers — understand your actual budget', completed: false },
   { text: 'Add other monthly expenses to budget (edit for accuracy: subscriptions, phone, etc.)', completed: false },
@@ -695,7 +600,7 @@ let tasks = JSON.parse(localStorage.getItem('kyra_tasks')) || [
   { text: 'Apply to SNAP (food stamps): Colorado PEAK: https://peak.colorado.gov or (303) 866-5500 — immediate relief', completed: false },
   { text: 'Apply to Longmont CAReS+ (electricity, water, grocery rebates) — LongmontCares@LongmontColorado.gov — saves on utilities', completed: false },
   { text: 'Set up utility bill collection system with Jack & Freida — use Splitwise or Venmo with automatic reminders. Collect BEFORE bill is due to avoid overdrafts', completed: false },
-  { text: 'When $10k loan hits: deposit to HYSA, then set up $1,039/month auto-transfer to checking — CRITICAL TIMING', completed: false },
+  { text: 'When $10k loan hits (Aug/Feb): pay off Capital One & American Airlines completely, then throw ALL remaining cash at Discover. Use Discover to cover the monthly living gap — CRITICAL TIMING', completed: false },
   { text: 'Confirm PSLF eligibility & state job requirements with financial aid (303-492-5091) — affects 10-year forgiveness plan', completed: false },
   { text: 'Cut TV subscriptions to 1 service (~$27/month savings)', completed: false },
   { text: 'Review pet insurance — find cheaper option or keep if it gives you peace of mind', completed: false },
@@ -711,7 +616,6 @@ let tasks = JSON.parse(localStorage.getItem('kyra_tasks')) || [
 ];
 let tasksCompleted = JSON.parse(localStorage.getItem('kyra_tasksCompleted')) || 0;
 let spending = JSON.parse(localStorage.getItem('kyra_spending')) || [];
-let income = JSON.parse(localStorage.getItem('kyra_income')) || [];
 let updates = JSON.parse(localStorage.getItem('kyra_updates')) || [];
 let receivables = JSON.parse(localStorage.getItem('kyra_receivables')) || [
   { person: 'Jack', amount: 350, paid: false },
@@ -758,52 +662,6 @@ const spendingGoals = {
 
 function saveTasks() { localStorage.setItem('kyra_tasks', JSON.stringify(tasks)); }
 function saveSpending() { localStorage.setItem('kyra_spending', JSON.stringify(spending)); }
-function saveIncome() { localStorage.setItem('kyra_income', JSON.stringify(income)); }
-
-function renderIncome() {
-  let html = '<div style="margin-top: 1rem;">';
-  let totalIncome = 0;
-  
-  if (income.length === 0) {
-    html += '<div style="font-size: 13px; color: #999; text-align: center; padding: 1rem;">No income logged yet. Start tracking your earnings! 💰</div>';
-  } else {
-    income.forEach((entry, idx) => {
-      const amount = parseFloat(entry.amount);
-      totalIncome += amount;
-      html += `
-        <div style="background: rgba(76, 175, 80, 0.08); padding: 12px; border-radius: 6px; margin-bottom: 8px; border-left: 4px solid #4CAF50;">
-          <div style="display: flex; justify-content: space-between; align-items: start;">
-            <div>
-              <div style="font-weight: 600; color: #2e7d32;">${entry.desc}</div>
-              <div style="font-size: 12px; color: #666;">${entry.category} • ${entry.date}</div>
-            </div>
-            <div style="text-align: right;">
-              <div style="font-weight: 600; color: #2e7d32; font-size: 16px;">+$${amount.toFixed(2)}</div>
-              <button onclick="deleteIncome(${idx})" style="background: #ff6b6b; color: white; border: none; padding: 4px 8px; border-radius: 4px; font-size: 11px; cursor: pointer;">Delete</button>
-            </div>
-          </div>
-        </div>
-      `;
-    });
-    
-    html += `
-      <div style="background: rgba(76, 175, 80, 0.15); padding: 12px; border-radius: 6px; margin-top: 1rem; text-align: center; border: 2px solid #4CAF50;">
-        <div style="font-weight: 600; color: #2e7d32;">Total Extra Income</div>
-        <div style="font-size: 20px; font-weight: 700; color: #2e7d32;">+$${totalIncome.toFixed(2)}</div>
-      </div>
-    `;
-  }
-  
-  html += '</div>';
-  document.getElementById('incomeList').innerHTML = html;
-}
-
-function deleteIncome(idx) {
-  income.splice(idx, 1);
-  saveIncome();
-  renderIncome();
-  updateStarCount();
-}
 
 function deleteSpending(idx) {
   spending.splice(idx, 1);
@@ -820,9 +678,6 @@ function updateStarCount() {
   
   // 1 star per spending entry logged
   const spendingStars = spending.length;
-  
-  // 1 star per income entry logged
-  const incomeStars = income.length;
   
   // 1 star per financial picture update
   const updateStars = updates.length;
@@ -848,7 +703,7 @@ function updateStarCount() {
     // NOTE: Discover transactions are already counted in spendingStars (1 star per entry), so don't double-count here
   });
   
-  const totalStars = completedTasks + budgetStars + spendingStars + incomeStars + updateStars + reminderStars;
+  const totalStars = completedTasks + budgetStars + spendingStars + updateStars + reminderStars;
   document.getElementById('totalStars').textContent = totalStars;
   
   // Calculate achievements (25=turtle, 50=bunny, 125=dragon, 250=castle, 500=planet, 1000=baby hippo)
@@ -1024,40 +879,6 @@ function logReminder(person) {
   localStorage.setItem('kyra_reminders', JSON.stringify(reminders));
   updateStarCount();
   alert(`✅ Reminder sent to ${person}! You earned 1 ⭐ star.`);
-}
-
-function renderDebtTracker() {
-  const balances = JSON.parse(localStorage.getItem('kyra_balances')) || { discover: 0, aa: 0, capone: 0, medical: 0 };
-  const initial = { discover: 22344, aa: 2561, capone: 328.33, medical: 3554 };
-  
-  let html = '';
-  const cards = [
-    { key: 'capone', name: '1️⃣ PRIORITY 1: Capital One Card ($328.33 @ 27.74% — HIGHEST RATE)', color: '#4CAF50', initial: 328.33 },
-    { key: 'aa', name: '2️⃣ PRIORITY 2: American Airlines Card ($2,561 @ 27.49%)', color: '#FFC107', initial: 2561 },
-    { key: 'discover', name: '3️⃣ PRIORITY 3: Discover Card ($22,344 @ 25.49%)', color: '#ff6b6b', initial: 22344 },
-    { key: 'medical', name: 'Medical Debt ($3,554 @ 0% — No interest, pay minimums)', color: '#99ccff', initial: 3554 }
-  ];
-  
-  cards.forEach(card => {
-    const remaining = balances[card.key] || card.initial;
-    const paidDown = card.initial - remaining;
-    const percent = (paidDown / card.initial) * 100;
-    
-    html += `
-      <div style="margin-bottom: 1.5rem;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-          <div style="font-weight: 600;">${card.name}</div>
-          <div style="font-size: 12px; color: #666;">Paid: $${paidDown.toFixed(2)} / Remaining: $${remaining.toFixed(2)}</div>
-        </div>
-        <div style="background: #eee; height: 12px; border-radius: 6px; overflow: hidden;">
-          <div style="background: ${card.color}; height: 100%; width: ${Math.min(percent, 100)}%; transition: width 0.3s;"></div>
-        </div>
-        <div style="font-size: 11px; color: #999; margin-top: 4px;">${percent.toFixed(0)}% paid down</div>
-      </div>
-    `;
-  });
-  
-  document.getElementById('debtTracker').innerHTML = html;
 }
 
 
@@ -1238,31 +1059,12 @@ document.getElementById('spendingForm').addEventListener('submit', e => {
   }
 });
 
-document.getElementById('incomeForm').addEventListener('submit', e => {
-  e.preventDefault();
-  const date = document.getElementById('incomeDate').value;
-  const desc = document.getElementById('incomeDesc').value;
-  const category = document.getElementById('incomeCategory').value;
-  const amount = document.getElementById('incomeAmount').value;
-  if (date && desc && category && amount) {
-    income.unshift({ date, desc, category, amount });
-    document.getElementById('incomeForm').reset();
-    saveIncome();
-    renderIncome();
-    updateStarCount();
-  }
-});
-
-document.getElementById('spendDate').valueAsDate = new Date();
-document.getElementById('incomeDate').valueAsDate = new Date();
-
 let accountHistory = JSON.parse(localStorage.getItem('kyra_accountHistory')) || [];
 let balanceChart = null;
 
 function loadAccountBalances() {
   const balances = JSON.parse(localStorage.getItem('kyra_balances')) || { 
     checking: 997,
-    hysa: 0, 
     discover: 22344,
     aa: 2561,
     capone: 328.33,
@@ -1270,7 +1072,6 @@ function loadAccountBalances() {
     student: 104358
   };
   document.getElementById('checkingInput').value = balances.checking || '';
-  document.getElementById('hysaInput').value = balances.hysa || '';
   document.getElementById('discoverInput').value = balances.discover || '';
   document.getElementById('aaInput').value = balances.aa || '';
   document.getElementById('caponeInput').value = balances.capone || '';
@@ -1281,18 +1082,17 @@ function loadAccountBalances() {
 
 function updateAccountBalances() {
   const checking = parseFloat(document.getElementById('checkingInput').value) || 0;
-  const hysa = parseFloat(document.getElementById('hysaInput').value) || 0;
   const discover = parseFloat(document.getElementById('discoverInput').value) || 0;
   const aa = parseFloat(document.getElementById('aaInput').value) || 0;
   const capone = parseFloat(document.getElementById('caponeInput').value) || 0;
   const medical = parseFloat(document.getElementById('medicalInput').value) || 0;
   const student = parseFloat(document.getElementById('studentInput').value) || 0;
   
-  const balances = { checking, hysa, discover, aa, capone, medical, student };
+  const balances = { checking, discover, aa, capone, medical, student };
   localStorage.setItem('kyra_balances', JSON.stringify(balances));
   
   const today = new Date().toISOString().split('T')[0];
-  accountHistory.push({ date: today, checking, hysa, discover, aa, capone, medical, student });
+  accountHistory.push({ date: today, checking, discover, aa, capone, medical, student });
   localStorage.setItem('kyra_accountHistory', JSON.stringify(accountHistory));
   
   // Track this update and award a star
@@ -1301,19 +1101,17 @@ function updateAccountBalances() {
   
   displayAccountBalances(balances);
   renderChart();
-  renderDebtTracker();
   renderDiscoverTimeline();
   updateStarCount();
 }
 
 function displayAccountBalances(balances) {
   document.getElementById('checkingDisplay').textContent = '$' + balances.checking.toFixed(2);
-  document.getElementById('hysaDisplay').textContent = '$' + balances.hysa.toFixed(2);
   
   const totalDebt = balances.discover + balances.aa + balances.capone + balances.medical + balances.student;
   document.getElementById('totalDebtDisplay').textContent = '$' + totalDebt.toFixed(2);
   
-  const liquidAssets = balances.checking + balances.hysa;
+  const liquidAssets = balances.checking;
   document.getElementById('liquidDisplay').textContent = '$' + liquidAssets.toFixed(2);
   
   const netWorth = liquidAssets - totalDebt;
@@ -1327,7 +1125,6 @@ function renderChart() {
   
   const dates = accountHistory.map(h => h.date).slice(-12);
   const checkingData = accountHistory.map(h => h.checking).slice(-12);
-  const hysaData = accountHistory.map(h => h.hysa).slice(-12);
   const discoverData = accountHistory.map(h => -h.discover).slice(-12);
   const aaData = accountHistory.map(h => -h.aa).slice(-12);
   const caponeData = accountHistory.map(h => -h.capone).slice(-12);
@@ -1348,16 +1145,6 @@ function renderChart() {
           data: checkingData.length > 0 ? checkingData : [0],
           borderColor: '#e87ba4',
           backgroundColor: 'rgba(232, 123, 164, 0.1)',
-          borderWidth: 2,
-          tension: 0.4,
-          fill: false,
-          yAxisID: 'y'
-        },
-        {
-          label: 'HYSA',
-          data: hysaData.length > 0 ? hysaData : [0],
-          borderColor: '#d4af37',
-          backgroundColor: 'rgba(212, 175, 55, 0.1)',
           borderWidth: 2,
           tension: 0.4,
           fill: false,
@@ -1443,11 +1230,11 @@ renderChart();
 renderTasks();
 renderGoals();
 renderSpending();
-renderIncome();
 renderReceivables();
-renderDebtTracker();
 renderDiscoverTimeline();
 updateStarCount();
+
+document.getElementById('spendDate').valueAsDate = new Date();
 </script>
 
 </body>
