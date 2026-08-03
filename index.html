@@ -4,6 +4,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>KYRA'S SPECIAL PROGRAM FOR FUCKING CRUSHING IT</title>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyDwKA2dPF4ySIelreU3lyGJBLcnlNgh2is",
+      authDomain: "kyras-special-program.firebaseapp.com",
+      databaseURL: "https://kyras-special-program-default-rtdb.firebaseio.com",
+      projectId: "kyras-special-program",
+      storageBucket: "kyras-special-program.firebasestorage.app",
+      messagingSenderId: "351321248960",
+      appId: "1:351321248960:web:29b23ebab4f8a31aa30925"
+    };
+    // db is initialized later, only if the Firebase SDK actually loaded.
+    window.db = null;
+  </script>
   <style>
     :root {
       --pink-light: #f0d4e6;
@@ -367,6 +382,7 @@
     <div id="starCelebration" style="font-size: 14px; color: #fff; margin-top: 0.75rem; font-weight: 600; min-height: 20px;"></div>
     <div style="font-size: 12px; color: rgba(255,255,255,0.85); margin-top: 0.5rem;">Keep checking off tasks to earn more stars!</div>
     <div id="achievementDisplay" style="margin-top: 1rem; font-size: 20px; text-align: center;"></div>
+    <div id="syncStatus" style="margin-top: 0.75rem; font-size: 12px; color: rgba(255,255,255,0.85); font-weight: 600;">☁️ Connecting…</div>
   </div>
 
   <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(212,175,55,0.3); border-radius: 12px; padding: 1rem; margin: 1rem 0; max-width: 600px; margin-left: auto; margin-right: auto;">
@@ -585,6 +601,18 @@
     </div>
   </div>
 
+  <div class="section" style="border: 2px dashed var(--pink-mid);">
+    <h2><span class="section-icon">🔄</span> Sync Setup (One-Time)</h2>
+    <div style="background: var(--pink-light); padding: 12px; border-radius: 8px; margin-bottom: 1rem; font-size: 13px;">
+      <strong style="color: var(--pink-dark);">First time only:</strong> If you have data saved on this device that isn't showing up on your other devices, use these buttons ONCE to move it to the cloud. After that, everything syncs automatically — you won't need these again.
+    </div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+      <button onclick="exportMyData()" style="background: var(--pink-mid); color: white; border: none; padding: 14px; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 14px;">📤 Export My Data</button>
+      <button onclick="importMyData()" style="background: #4CAF50; color: white; border: none; padding: 14px; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 14px;">📥 Import My Data</button>
+    </div>
+    <div style="font-size: 11px; color: #999; margin-top: 12px; text-align: center;">Export copies your data. Import loads it and syncs it to the cloud.</div>
+  </div>
+
 </div>
 
 <script>
@@ -660,8 +688,120 @@ const spendingGoals = {
   }
 };
 
-function saveTasks() { localStorage.setItem('kyra_tasks', JSON.stringify(tasks)); }
-function saveSpending() { localStorage.setItem('kyra_spending', JSON.stringify(spending)); }
+// ==================== FIREBASE CLOUD SYNC ====================
+// All of Kyra's data syncs to the cloud so it's the same on phone + laptop.
+let cloudReady = false;
+let suppressPush = false; // prevents echo loops when cloud updates come in
+
+function gatherAllData() {
+  return {
+    tasks: tasks,
+    tasksCompleted: tasksCompleted,
+    spending: spending,
+    updates: updates,
+    receivables: receivables,
+    reminders: reminders,
+    balances: JSON.parse(localStorage.getItem('kyra_balances') || 'null'),
+    accountHistory: (typeof accountHistory !== 'undefined') ? accountHistory : JSON.parse(localStorage.getItem('kyra_accountHistory') || '[]')
+  };
+}
+
+function pushToCloud() {
+  if (!cloudReady || suppressPush || !window.db) return;
+  try {
+    window.db.ref('kyraData').set(gatherAllData());
+  } catch (e) {
+    console.error('Cloud push failed:', e);
+  }
+}
+
+function applyCloudData(data) {
+  if (!data) return;
+  suppressPush = true;
+  
+  if (data.tasks) { tasks = data.tasks; localStorage.setItem('kyra_tasks', JSON.stringify(tasks)); }
+  if (typeof data.tasksCompleted === 'number') { tasksCompleted = data.tasksCompleted; localStorage.setItem('kyra_tasksCompleted', JSON.stringify(tasksCompleted)); }
+  if (data.spending) { spending = data.spending; localStorage.setItem('kyra_spending', JSON.stringify(spending)); }
+  if (data.updates) { updates = data.updates; localStorage.setItem('kyra_updates', JSON.stringify(updates)); }
+  if (data.receivables) { receivables = data.receivables; localStorage.setItem('kyra_receivables', JSON.stringify(receivables)); }
+  if (data.reminders) { reminders = data.reminders; localStorage.setItem('kyra_reminders', JSON.stringify(reminders)); }
+  if (data.balances) { localStorage.setItem('kyra_balances', JSON.stringify(data.balances)); }
+  if (data.accountHistory) {
+    localStorage.setItem('kyra_accountHistory', JSON.stringify(data.accountHistory));
+    if (typeof accountHistory !== 'undefined') accountHistory = data.accountHistory;
+  }
+  
+  // Re-render everything with the fresh cloud data
+  if (typeof loadAccountBalances === 'function') loadAccountBalances();
+  if (typeof renderChart === 'function') renderChart();
+  renderTasks();
+  renderGoals();
+  renderSpending();
+  renderReceivables();
+  renderDiscoverTimeline();
+  updateStarCount();
+  
+  suppressPush = false;
+  updateSyncStatus('synced');
+}
+
+function updateSyncStatus(state) {
+  const el = document.getElementById('syncStatus');
+  if (!el) return;
+  if (state === 'synced') {
+    el.textContent = '☁️ Synced';
+    el.style.color = '#4CAF50';
+  } else if (state === 'syncing') {
+    el.textContent = '☁️ Syncing…';
+    el.style.color = '#999';
+  } else if (state === 'offline') {
+    el.textContent = '⚠️ Offline';
+    el.style.color = '#ff6b6b';
+  }
+}
+
+function initCloudSync() {
+  // If the Firebase SDK didn't load (e.g. opened as a local file, or offline),
+  // fall back to local-only mode so the app still works.
+  if (typeof firebase === 'undefined') {
+    console.warn('Firebase SDK not loaded — running in local-only mode.');
+    updateSyncStatus('offline');
+    return;
+  }
+  try {
+    firebase.initializeApp(firebaseConfig);
+    window.db = firebase.database();
+  } catch (e) {
+    console.error('Firebase init failed:', e);
+    updateSyncStatus('offline');
+    return;
+  }
+  
+  window.db.ref('kyraData').once('value').then(snapshot => {
+    cloudReady = true;
+    const cloudData = snapshot.val();
+    if (cloudData) {
+      // Cloud has data — use it as the source of truth
+      applyCloudData(cloudData);
+    } else {
+      // Cloud is empty — push whatever is on this device up to seed it
+      pushToCloud();
+      updateSyncStatus('synced');
+    }
+    // Listen for live changes from other devices
+    window.db.ref('kyraData').on('value', snap => {
+      if (suppressPush) return;
+      const d = snap.val();
+      if (d) applyCloudData(d);
+    });
+  }).catch(e => {
+    console.error('Cloud init failed:', e);
+    updateSyncStatus('offline');
+  });
+}
+
+function saveTasks() { localStorage.setItem('kyra_tasks', JSON.stringify(tasks)); pushToCloud(); }
+function saveSpending() { localStorage.setItem('kyra_spending', JSON.stringify(spending)); pushToCloud(); }
 
 function deleteSpending(idx) {
   spending.splice(idx, 1);
@@ -855,6 +995,7 @@ function markPaid(idx) {
     receivables[idx].amount = 0;
   }
   localStorage.setItem('kyra_receivables', JSON.stringify(receivables));
+  pushToCloud();
   renderReceivables();
 }
 
@@ -867,6 +1008,7 @@ function updateReceivable(idx) {
   const today = new Date().toISOString().split('T')[0];
   updates.push({ date: today, type: 'receivable', person: receivables[idx].person, newAmount });
   localStorage.setItem('kyra_updates', JSON.stringify(updates));
+  pushToCloud();
   
   renderReceivables();
   updateStarCount();
@@ -877,6 +1019,7 @@ function logReminder(person) {
   const today = new Date().toISOString().split('T')[0];
   reminders.push({ person, date: today });
   localStorage.setItem('kyra_reminders', JSON.stringify(reminders));
+  pushToCloud();
   updateStarCount();
   alert(`✅ Reminder sent to ${person}! You earned 1 ⭐ star.`);
 }
@@ -1098,6 +1241,7 @@ function updateAccountBalances() {
   // Track this update and award a star
   updates.push({ date: today });
   localStorage.setItem('kyra_updates', JSON.stringify(updates));
+  pushToCloud();
   
   displayAccountBalances(balances);
   renderChart();
@@ -1235,6 +1379,34 @@ renderDiscoverTimeline();
 updateStarCount();
 
 document.getElementById('spendDate').valueAsDate = new Date();
+
+// ==================== EXPORT / IMPORT (one-time migration) ====================
+function exportMyData() {
+  const data = gatherAllData();
+  const text = JSON.stringify(data);
+  navigator.clipboard.writeText(text).then(() => {
+    alert('✅ Your data is copied to your clipboard!\n\nNow refresh the page, then click "Import My Data" and paste.');
+  }).catch(() => {
+    // Fallback if clipboard blocked: show it in a prompt to copy manually
+    prompt('Copy all of this text (Ctrl+C / Cmd+C), then refresh and use Import:', text);
+  });
+}
+
+function importMyData() {
+  const text = prompt('Paste your exported data here (Ctrl+V / Cmd+V), then click OK:');
+  if (!text) return;
+  try {
+    const data = JSON.parse(text);
+    applyCloudData(data);   // load into app + localStorage + re-render
+    pushToCloud();          // send it up to the cloud
+    alert('✅ Your data has been imported and synced to the cloud!\n\nOpen the app on your other devices and everything will be there too.');
+  } catch (e) {
+    alert('⚠️ That didn\'t look like valid data. Make sure you pasted the full text you exported.');
+  }
+}
+
+// ==================== START CLOUD SYNC ====================
+initCloudSync();
 </script>
 
 </body>
