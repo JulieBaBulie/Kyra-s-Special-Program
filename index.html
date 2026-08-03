@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>KYRA'S SPECIAL PROGRAM FOR FUCKING CRUSHING IT</title>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
   <script>
     const firebaseConfig = {
@@ -715,20 +716,28 @@ function pushToCloud() {
   }
 }
 
+// Firebase can turn arrays into objects (or drop empty ones). This ensures we always get a clean array.
+function ensureArray(val) {
+  if (Array.isArray(val)) return val;
+  if (val && typeof val === 'object') return Object.values(val);
+  return [];
+}
+
 function applyCloudData(data) {
   if (!data) return;
   suppressPush = true;
   
-  if (data.tasks) { tasks = data.tasks; localStorage.setItem('kyra_tasks', JSON.stringify(tasks)); }
+  if (data.tasks !== undefined) { tasks = ensureArray(data.tasks); localStorage.setItem('kyra_tasks', JSON.stringify(tasks)); }
   if (typeof data.tasksCompleted === 'number') { tasksCompleted = data.tasksCompleted; localStorage.setItem('kyra_tasksCompleted', JSON.stringify(tasksCompleted)); }
-  if (data.spending) { spending = data.spending; localStorage.setItem('kyra_spending', JSON.stringify(spending)); }
-  if (data.updates) { updates = data.updates; localStorage.setItem('kyra_updates', JSON.stringify(updates)); }
-  if (data.receivables) { receivables = data.receivables; localStorage.setItem('kyra_receivables', JSON.stringify(receivables)); }
-  if (data.reminders) { reminders = data.reminders; localStorage.setItem('kyra_reminders', JSON.stringify(reminders)); }
+  if (data.spending !== undefined) { spending = ensureArray(data.spending); localStorage.setItem('kyra_spending', JSON.stringify(spending)); }
+  if (data.updates !== undefined) { updates = ensureArray(data.updates); localStorage.setItem('kyra_updates', JSON.stringify(updates)); }
+  if (data.receivables !== undefined) { receivables = ensureArray(data.receivables); localStorage.setItem('kyra_receivables', JSON.stringify(receivables)); }
+  if (data.reminders !== undefined) { reminders = ensureArray(data.reminders); localStorage.setItem('kyra_reminders', JSON.stringify(reminders)); }
   if (data.balances) { localStorage.setItem('kyra_balances', JSON.stringify(data.balances)); }
-  if (data.accountHistory) {
-    localStorage.setItem('kyra_accountHistory', JSON.stringify(data.accountHistory));
-    if (typeof accountHistory !== 'undefined') accountHistory = data.accountHistory;
+  if (data.accountHistory !== undefined) {
+    const ah = ensureArray(data.accountHistory);
+    localStorage.setItem('kyra_accountHistory', JSON.stringify(ah));
+    if (typeof accountHistory !== 'undefined') accountHistory = ah;
   }
   
   // Re-render everything with the fresh cloud data
@@ -777,25 +786,31 @@ function initCloudSync() {
     return;
   }
   
-  window.db.ref('kyraData').once('value').then(snapshot => {
+  // Sign in anonymously first — the security rules require an authenticated user.
+  firebase.auth().signInAnonymously().then(() => {
+    startDatabaseSync();
+  }).catch(e => {
+    console.error('Anonymous sign-in failed:', e);
+    updateSyncStatus('offline');
+  });
+}
+
+function startDatabaseSync() {
+  let firstLoad = true;
+  window.db.ref('kyraData').on('value', snap => {
     cloudReady = true;
-    const cloudData = snapshot.val();
-    if (cloudData) {
-      // Cloud has data — use it as the source of truth
-      applyCloudData(cloudData);
-    } else {
-      // Cloud is empty — push whatever is on this device up to seed it
+    const d = snap.val();
+    if (d) {
+      if (suppressPush) return;
+      applyCloudData(d);
+    } else if (firstLoad) {
+      // Cloud is empty on very first load — push this device's data up to seed it
       pushToCloud();
       updateSyncStatus('synced');
     }
-    // Listen for live changes from other devices
-    window.db.ref('kyraData').on('value', snap => {
-      if (suppressPush) return;
-      const d = snap.val();
-      if (d) applyCloudData(d);
-    });
-  }).catch(e => {
-    console.error('Cloud init failed:', e);
+    firstLoad = false;
+  }, err => {
+    console.error('Cloud listener failed:', err);
     updateSyncStatus('offline');
   });
 }
@@ -1382,7 +1397,18 @@ document.getElementById('spendDate').valueAsDate = new Date();
 
 // ==================== EXPORT / IMPORT (one-time migration) ====================
 function exportMyData() {
-  const data = gatherAllData();
+  // Read straight from localStorage (this device's own saved data),
+  // so it can't be affected by anything coming from the cloud.
+  const data = {
+    tasks: JSON.parse(localStorage.getItem('kyra_tasks') || 'null'),
+    tasksCompleted: JSON.parse(localStorage.getItem('kyra_tasksCompleted') || '0'),
+    spending: JSON.parse(localStorage.getItem('kyra_spending') || '[]'),
+    updates: JSON.parse(localStorage.getItem('kyra_updates') || '[]'),
+    receivables: JSON.parse(localStorage.getItem('kyra_receivables') || 'null'),
+    reminders: JSON.parse(localStorage.getItem('kyra_reminders') || '[]'),
+    balances: JSON.parse(localStorage.getItem('kyra_balances') || 'null'),
+    accountHistory: JSON.parse(localStorage.getItem('kyra_accountHistory') || '[]')
+  };
   const text = JSON.stringify(data);
   navigator.clipboard.writeText(text).then(() => {
     alert('✅ Your data is copied to your clipboard!\n\nNow refresh the page, then click "Import My Data" and paste.');
@@ -1398,8 +1424,15 @@ function importMyData() {
   try {
     const data = JSON.parse(text);
     applyCloudData(data);   // load into app + localStorage + re-render
-    pushToCloud();          // send it up to the cloud
-    alert('✅ Your data has been imported and synced to the cloud!\n\nOpen the app on your other devices and everything will be there too.');
+    // Force-push directly to the cloud so this device's data becomes the master copy,
+    // even if the initial sync hasn't finished yet.
+    if (window.db) {
+      cloudReady = true;
+      window.db.ref('kyraData').set(gatherAllData());
+      alert('✅ Your data has been imported and synced to the cloud!\n\nOpen the app on your other devices and everything will be there too.');
+    } else {
+      alert('✅ Your data was imported to this device, but the cloud isn\'t connected right now.\n\nMake sure you\'re opening the app from the website link (not a saved file), then try Import again to sync it.');
+    }
   } catch (e) {
     alert('⚠️ That didn\'t look like valid data. Make sure you pasted the full text you exported.');
   }
